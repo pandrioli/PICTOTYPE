@@ -76,7 +76,7 @@ class GameController extends Controller
         }
         return redirect()->route('home');
       }
-      $game->setPlayerState(Game::PLAYER_PLAYING);
+      if (!$game->practique) $game->setPlayerState(Game::PLAYER_PLAYING);
       return view('gameplay', compact('game','user_id'));
     }
 

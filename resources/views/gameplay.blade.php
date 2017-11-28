@@ -27,7 +27,11 @@
       </div>
       <div class="game-panel game-timer" id="timer">
       </div>
-      <a class="game-panel game-cancel" href="/cancelgame/{{$game->id}}/{{$user_id}}">
+      @if ($game->practique)
+        <a class="game-panel game-cancel" href="/">              
+      @else
+        <a class="game-panel game-cancel" href="/cancelgame/{{$game->id}}/{{$user_id}}">
+      @endif
         X
       </a>
       <div class="game-images-container" id="images-container">
