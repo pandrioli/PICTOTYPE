@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\DB;
 use App\Game;
 use App\Phrase;
 use App\Word;
-
+use App\CustomClasses\NotificationManager;
 
 class GameController extends Controller
 {
+    private $notifyman;
     private $words;
-    public function __construct() {
+    public function __construct(NotificationManager $notifyman) {
+      $this->notifyman = $notifyman;
       $words = [];
       $files = glob(public_path()."/img/pictotypes/*.jpg");
       foreach ($files as $file) {
