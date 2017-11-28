@@ -1,0 +1,359 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: ;
+  color: white;
+  font-size: 10px;
+  background-color: black;
+  background: url('/img/background.jpg');
+  background-size: 25vmax;
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+}
+  100% {
+    opacity: .7;
+    transform: scale(.7);
+  }
+}
+
+@keyframes pulsate_little {
+  0% {
+    opacity: .8;
+    transform: scale(1);
+}
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: rgb(23, 150, 221);
+  color: white;
+  width: 300px;
+  height: 100px;
+  line-height: 100px;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgb(23, 150, 221);
+  opacity: 0.7;
+  animation-name: pulsate;
+  animation-duration: .5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.vertical-parent {
+  width: 100vw;
+  height: 100vh;
+  display: table;
+}
+
+.vertical-child {
+  display: table-cell;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+
+.game-container {
+  max-width: 1000px;
+  height: auto;
+  margin: 0 auto;
+  padding: 5px;
+  color: white;
+  overflow: hidden;
+  font-family: 'Share Tech Mono',monospace;
+  font-weight: bold;
+  text-align: center;
+}
+
+.logo {
+  margin: 5%;
+  font-weight: bolder;
+  font-size: 7em;
+}
+
+.logo span:last-child {
+  color: rgb(23, 150, 221);
+  text-shadow: 0 0 15px rgb(23, 150, 221);
+}
+.logo span:first-child {
+  color: rgb(221,150,23);
+  text-shadow: 0 0 15px rgb(221,150,23);
+}
+
+
+.mode-info {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 850px;
+  background-color: black;
+  color: white;
+  overflow: hidden;
+  text-align: center;
+  font-size: 2em;
+}
+
+.game-panel {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  margin: .5%;
+  border-radius: 10px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  font-size: 2em;
+  border: none;
+  text-decoration: none;
+}
+
+.mode-button {
+  width: 40%;
+  min-width: 200px;
+  display: block;
+  float: none;
+  background-color: rgb(23, 150, 221);
+  box-shadow: 0 0 20px rgb(23, 150, 221);
+  margin: 10px auto;
+}
+
+.mode-label {
+  float: none;
+  width: 40%;
+  min-width: 200px;
+  background-color: rgb(221,150,23);
+  box-shadow: 0 0 20px rgb(221,150,23);
+  margin: 10px auto;
+  animation-name: pulsate_little;
+  animation-duration: .5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.game-phrase  {
+  width: 65.64%;
+  background-color: rgb(23, 150, 221);
+  box-shadow: 0 0 20px rgb(23, 150, 221);
+}
+
+.game-phrase div {
+  font-size: 1em;
+}
+
+.game-timer {
+  width: 26.2%;
+  background-color: rgb(221,150,23);
+  box-shadow: 0 0 20px rgb(221, 150, 23);
+}
+
+.game-cancel {
+  float: right;
+  width: 5%;
+  margin: .5%;
+  background-color: red;
+  box-shadow: 0 0 20px red;
+  cursor: pointer;
+}
+
+.game-images-container {
+  width: 100%;
+  height: 89%;
+  margin: 0;
+  margin-top: .5%;
+}
+
+.game-images-container div {
+  position: relative;
+  float: left;
+  width: 15.66%;
+  margin: .5%;
+  border-radius: 10px;
+  box-shadow: 0 0 5px lightgray;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.game-images-container img {
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  z-index: -2;
+}
+
+.game-images-container span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  top: 40%;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+  font-size: 2em;
+}
+
+@keyframes current_letter {
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+}
+
+#current-letter {
+  display: inline-block;
+  color: yellow;
+  animation-name: current_letter;
+  animation-duration: .5s;
+  animation-iteration-count: infinite;
+}
+
+#done-text {
+  display: inline-block;
+  color: white;
+}
+
+#remaining-text {
+  display: inline-block;
+  color: lightgray;
+}
+
+.game-popup {
+  opacity: 0;
+  pointer-events: none;
+  width: 20vh;
+  height: 15vh;
+  line-height: 15vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: yellow;
+  font-size: 3em;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  text-shadow: -2px -2px 3px rgba(0,0,0,.5), 2px -2px 3px rgba(0,0,0,.5), -2px 2px 3px rgba(0,0,0,.5), 2px 2px 3px rgba(0,0,0,.5);
+}
+
+@media (max-height: 750px) {
+  .game-container {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 1000px) {
+  body {
+    font-size: 9px;
+  }
+  .game-phrase {
+    width: 74.3%;
+  }
+  .game-timer {
+    width: 17.6%;
+  }
+}
+
+@media (max-width: 800px) {
+  .game-phrase {
+    width: 99%;
+  }
+  .game-cancel {
+    width: 19%;
+    float:right;
+  }
+  .game-timer {
+    width: 19%;
+  }
+
+  .game-images-container div {
+    width: 19%;
+  }
+
+  .game-images-container div:nth-child(4) {
+    clear:both;
+  }
+
+  .game-images-container div:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 1.5vw;
+  }
+  .game-panel {
+    height: 8vw;
+    line-height: 8vw;
+  }
+  .game-phrase {
+    width: 99%;
+  }
+  .game-timer {
+    width: 24%;
+  }
+  .game-cancel {
+    width: 24%;
+  }
+  .game-images-container {
+    clear: both;
+  }
+
+  .game-images-container div {
+    width: 24%;
+  }
+
+  .game-images-container div:nth-child(4) {
+    clear:none;
+  }
+
+  .game-images-container div:nth-child(21) {
+    display: none;
+  }
+
+  .game-images-container div:nth-child(22) {
+    display: none;
+  }
+
+  .game-images-container div:nth-child(23) {
+    display: none;
+  }
+
+  .game-images-container div:nth-child(24) {
+    display: none;
+  }
+
+}
