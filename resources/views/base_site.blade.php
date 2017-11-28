@@ -30,7 +30,7 @@
     <script type="text/javascript" src="{{asset('js/CSSPlugin.min.js')}}"></script>
     <style>
       .avatar {
-        background: url({{url($avatar)}});
+        background: url('{{url($avatar)}}');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
