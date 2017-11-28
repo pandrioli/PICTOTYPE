@@ -459,6 +459,12 @@ img {
   margin: 5px;
   border-radius: 10px;
   cursor: pointer;
+  transition: .5s;
+}
+
+.game-item:hover {
+  background-color: white;
+  transform: scale(.99) translate(3px, 0px);
 }
 
 .game-item-avatar {
