@@ -13,13 +13,16 @@
   <div class='header-menu'>
     @if ($logged)
       <a class='header-item button back-color-1' href='/logout'>SALIR</a>
-      <a id="header-profile" class='header-item button back-color-1' href='/profile'><div class="header-avatar avatar"></div>MI PERFIL</a>
+      <a id="header-profile" class='header-item button back-color-1' href='/profile'><div class="header-avatar avatar"></div>PERFIL</a>
     @else
       <a id="header-login" class='header-item button back-color-1' href='/login'>INGRESAR</a>
       <a id="header-register" class='header-item button back-color-1' href='/register'>REGISTRARSE</a>
     @endif
     <a id="header-practique" class='header-item button back-color-2' href='/creategame/practique'>PRACTICAR </a>
-    <a class='header-item button back-color-2' href=''>INSTRUCCIONES</a>
+    <a class='header-item button back-color-2' href=''>TUTORIAL</a>
+    @if ($logged)
+      <a class='header-item button back-color-1' href=''>RANKING</a>
+    @endif
     <a id="header-home" class='header-item button back-color-1' href='/'>HOME</a>
   </div>
 </header>

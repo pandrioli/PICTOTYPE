@@ -8,7 +8,7 @@
   <div class="center-screen">
     <div class="home-user-container">
       <div class="form-heading back-color-2">
-        USUARIO: {{$user->username}}
+        USUARIO: <span>{{$user->username}}</span>
       </div>
       <div class="tab-container">
         <input id="tab1" type="radio" name="tabs" value="1" hidden checked onchange="switchPanel(0)">
@@ -57,9 +57,9 @@
         </div>
       </div>
       <div class="form-button-container">
-        <a class="button form-button back-color-1" href="/newgame">NUEVA PARTIDA</a>
-        <a class="button form-button back-color-2" href="">INVITAR</a>
-        <a class="button form-button back-color-2" href="">RANKINGS</a>
+        <div class="panel-footer back-color-1">NUEVA PARTIDA</div>
+        <a class="button form-button back-color-2" href="">PRIVADA</a>
+        <a class="button form-button back-color-1" href="/newgame">PUBLICA</a>
       </div>
     </div>
   </div>
