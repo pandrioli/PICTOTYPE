@@ -8,8 +8,9 @@
 git clone https://github.com/pandrioli/PICTOTYPE.git<br>
 cd PICTOTYPE <br>
 composer install <br>
-php artisan key:generate <br>
 cp .env.example .env <br><br>
+php artisan key:generate <br>
+
 
 </li>
 
