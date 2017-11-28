@@ -1,20 +1,26 @@
-PICTOTYPE
+<h1>PICTOTYPE</h1>
 
-Pasos para instalar 
+<h3>Instalacion</h3> 
 
-* desde la consola en un directorio con permiso de escritura:
+<ul>
+  <li>desde la consola en un directorio con permiso de escritura: <br><br>
 
 git clone https://github.com/pandrioli/PICTOTYPE.git<br>
 cd PICTOTYPE <br>
 composer install <br>
 php artisan key:generate <br>
-cp .env.example .env <br>
+cp .env.example .env <br><br>
 
-* Crear un schema en MySQL llamado "pictotype"
+</li>
 
-* editar el archivo .env para modificar los seteos del servidor MySQL
+<li>Crear un schema en MySQL llamado "pictotype"</li>
 
+<li>editar el archivo .env para modificar los seteos del servidor MySQL</li>
+
+<li>tipear en la consola<br><br>
 php artisan migrate <br>
-php artisan serve <br>
+php artisan serve <br><br>
+  </li>
 
-* ir a localhost:8000 en el navegador
+<li> ir a localhost:8000 en el navegador
+</li>
