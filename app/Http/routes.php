@@ -22,7 +22,7 @@ Route::get ('/creategame/{pract}', 'GameController@createGameForm');
 Route::post('/creategame', 'GameController@createGame');
 Route::get ('/viewgame/{id}', 'GameController@viewGame')->name('viewgame')->middleware('auth');
 
-Route::get ('/gameplay/{id}', 'GameController@playGame')->name('gameplay')->middleware('auth');
+Route::get ('/gameplay/{id}', 'GameController@playGame')->name('gameplay');
 Route::post('/finishgame', 'GameController@finishGame');
 Route::get ('/cancelgame/{game_id}/{user_id}', 'GameController@cancelGame');
 
