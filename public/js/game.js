@@ -20,7 +20,17 @@ function start() {
   image_count = parseInt(document.getElementById("image-count").innerHTML);
   letter_time = parseInt(document.getElementById("time-per-letter").innerHTML);
   phrase = document.getElementById("phrase-text").innerHTML;
-  phrase = "A";
+
+  //boton para terminar la partida - developer Mode
+  var cheatbutton = document.createElement('button');
+  cheatbutton.innerHTML = "SALTEAR PARTIDA - MODO DESARROLLO"
+  cheatbutton.onclick = win_game;
+  cheatbutton.style.position = "fixed";
+  cheatbutton.style.top = "0";
+  document.body.appendChild(cheatbutton);
+  //phrase = "A";
+
+
   letter_timer = document.getElementById("letter-timer");
   score = 0;
   win = false;
