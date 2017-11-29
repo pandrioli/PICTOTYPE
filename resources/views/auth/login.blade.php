@@ -10,9 +10,9 @@
                           {{ csrf_field() }}
 
                               <label for="username" >NOMBRE DE USUARIO</label>
-                              @if ($errors->has('email'))
+                              @if ($errors->has('username'))
                                   <span class="form-error">
-                                      <strong>{{ $errors->first('email') }}</strong>
+                                      <strong>{{ $errors->first('username') }}</strong>
                                   </span>
                               @endif
 
