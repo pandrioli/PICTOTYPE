@@ -12,7 +12,7 @@ var images;
 var letter_timer;
 var letter_time = 10;
 var score;
-
+ 
 function start() {
   game_id = document.getElementById("game-id").innerHTML;
   user_id = document.getElementById("user-id").innerHTML;
@@ -21,7 +21,7 @@ function start() {
   letter_time = parseInt(document.getElementById("time-per-letter").innerHTML);
   phrase = document.getElementById("phrase-text").innerHTML;
 
-  //boton para terminar la partida - developer Mode
+  //boton para terminar la partida - developer mode
   var cheatbutton = document.createElement('button');
   cheatbutton.innerHTML = "SALTEAR PARTIDA - MODO DESARROLLO"
   cheatbutton.onclick = win_game;
