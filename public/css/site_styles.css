@@ -14,6 +14,9 @@ body {
 img {
   width: 100%;
 }
+a {
+  text-decoration: none;
+}
 
 @keyframes pulsate {
   0% {
@@ -115,7 +118,6 @@ img {
   line-height: 40px;
   border-radius: 10px;
   border: none;
-  text-decoration: none;
   color: white;
   transition: 1s;
   cursor: pointer;
@@ -409,10 +411,44 @@ img {
 }
 
 
-.games-list {
+.item-list {
   height: 100%;
   padding-right: 15px;
   overflow-y: auto;
+}
+
+.notification-item {
+  display: block;
+  background-color: rgba(255,255,255,.4);
+  color: rgba(0,0,0,.5);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.notification-item span {
+  font-size: 1.3em;
+  color: black;
+  opacity: .7;
+}
+.notification-new {
+  background-color: rgba(255,255,255,.7);
+}
+
+.notification-item:hover {
+  background: white;
+  transform: scale(.99);
+}
+
+.notification-number {
+  display: inline-block;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  width: 1.1em;
+  height: 1.1em;
+  opacity: .7;
 }
 
 .games-list-header {
@@ -514,6 +550,8 @@ img {
   right: 18px;
   top: 0;
 }
+
+
 
 
 /* NEW-GAME --------------------------------------------------------------------*/

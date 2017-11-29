@@ -22,11 +22,12 @@
         <input id="tab3" type="radio" name="tabs" value="3" hidden onchange="switchPanel(2)">
         <label for="tab3" class="tab back-color-1">
           <i class="fa fa-bell" aria-hidden="true"></i>
+          <div class="notification-number">1</div>
         </label>
       </div>
       <div class="switch-container back-color-1">
         <div class="switch-panel">
-          <div class="games-list">
+          <div class="item-list">
             @if ($user->gamesToPlay->count() + $user->gamesPlayed->count() == 0)
               <div style="text-align: center; margin-top: 100px;">NO HAY PARTIDAS EN CURSO</div>
             @endif
@@ -45,7 +46,7 @@
           </div>
         </div>
         <div class="switch-panel">
-          <div class="games-list">
+          <div class="item-list">
             @forelse ($user->gamesFinished as $key=>$game)
               @include('game_item')
             @empty
@@ -54,6 +55,14 @@
           </div>
         </div>
         <div class="switch-panel">
+          <div class="games-list-header">NOTIFICACIONES RECIBIDAS</div>
+          <div class="item-list">
+            @forelse ($user->notifications as $key=>$notification)
+              @include('notification_item')
+            @empty
+                <div style="text-align: center; margin-top: 100px;">NO HAY NOTIFICACIONES</div>
+            @endforelse
+          </div>
         </div>
       </div>
       <div class="form-button-container">

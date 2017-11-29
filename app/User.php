@@ -32,6 +32,10 @@ class User extends Authenticatable
       return $this->belongsToMany(Game::class, 'games_users')->with('players')->where('practique', 0)->withPivot('state', 'time', 'points');
     }
 
+    public function notifications() {
+      return $this->hasMany(Notification::class)->orderBy('id', 'desc');
+    }
+
     public function gamesToPlay() {
       return $this->belongsToMany(Game::class, 'games_users')->where('practique',0)->withPivot('state', 'time', 'points')
         ->where('games_users.state', Game::PLAYER_READY)

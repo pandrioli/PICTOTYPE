@@ -6,7 +6,7 @@
   $player_state = $game->getPlayerState();
   $opponent = $game->opponentPlayer();
   if ($opponent) $opponent_state = $game->getOpponentState();
-  $tied = !$game->winner_id && $game->state == Game::STATE_FINISHED;
+  $tied = $game->winner_id === 0;
   $winner = !$tied && $game->winner_id == $player->id && $game->state == Game::STATE_FINISHED;
   $loser = !$tied && $game->winner_id != $player->id && $game->state == Game::STATE_FINISHED;
 @endphp
@@ -29,13 +29,13 @@
       <div class="form-heading back-color-2">
         RESULTADOS - MODO {{ $game->modeString() }}
       </div>
-      <div class="user-results-panel back-color-1 {{ $winner?'winner':''}} {{ $loser?'loser':''}}">
+      <div class="user-results-panel back-color-1 {{ $winner||$tied?'winner':''}} {{ $loser?'loser':''}}">
           <div class="user-results-avatar avatar"></div>
           <div class="user-result-name">
             {{ $player->username }}
           </div>
           <div class="user-result">
-            @if ($player_state == GAME::PLAYER_DONE)
+            @if ($player_state == GAME::PLAYER_DONE || $tied)
               @if ($game->mode==0)
                 TIEMPO: <span>{{ Game::formatTime($game->getPlayerTime()) }}</span>
               @else
@@ -46,14 +46,14 @@
             @endif
           </div>
       </div>
-      <div class="user-results-panel back-color-3 {{ $winner?'loser':'' }} {{ $loser?'winner':'' }}">
+      <div class="user-results-panel back-color-3 {{ $winner?'loser':'' }} {{ $loser||$tied?'winner':'' }}">
           <div class="user-results-avatar opponent-avatar"></div>
           @if ($opponent)
             <div class="user-result-name">
               {{ $opponent->username }}
             </div>
             <div class="user-result">
-              @if ($opponent_state == Game::PLAYER_DONE)
+              @if ($opponent_state == Game::PLAYER_DONE || $tied)
                 @if ($game->mode==0)
                   TIEMPO: <span>{{ Game::formatTime($game->getOpponentTime()) }}</span>
                 @else
@@ -74,7 +74,13 @@
         <a class="button form-button back-color-1" href="/">VOLVER A PANTALLA PRINCIPAL</a>
       @else
         <a class="button form-button back-color-2" href="/">VOLVER A PANTALLA PRINCIPAL</a>
-        <a class="button form-button back-color-1" href="/gameplay/{{ $game->id }}">JUGAR</a>
+        <a class="button form-button back-color-1" href="/gameplay/{{ $game->id }}">
+          @if ($tied)
+            DESEMPATAR
+          @else
+            JUGAR
+          @endif
+        </a>
       @endif
       </div>
     </div>

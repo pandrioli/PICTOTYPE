@@ -104,8 +104,13 @@ class GameController extends Controller
         if ($win == 2) {
           $game->winner_id = $game->opponentPlayer()->id;
         }
-        if ($win>0) $game->state = Game::STATE_FINISHED;
-        else $game->state = Game::STATE_WAITING_PLAYS;
+        if ($win>0) $game->state = Game::STATE_FINISHED; //gano alguien
+        else { // empate - volver a jugar - winner_id 0 indica empate
+          $game->state = Game::STATE_WAITING_PLAYS;
+          $game->setPlayerState(Game::PLAYER_READY);
+          $game->setOpponentState(Game::PLAYER_READY);
+          $game->winner_id = 0;
+        }
         $game->save();
         $this->notifyman->notifyGameFinished($game);
       }

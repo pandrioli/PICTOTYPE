@@ -20,14 +20,14 @@ class NotificationManager {
       $loser = $user1;
     }
     if (!$game->winner_id) {
-      $message = "EMPATASTE CON " + $user2->username + " ¡A DESEMPATAR!";
+      $message = "EMPATASTE CON <span>".$user2->username."</span> ¡A DESEMPATAR!";
       $this->notifyGame($game->id, $user1->id, $message, true);
-      $message = "EMPATASTE CON " + $user1->username + " ¡A DESEMPATAR!";
+      $message = "EMPATASTE CON <span>".$user1->username."</span> ¡A DESEMPATAR!";
       $this->notifyGame($game->id, $user2->id, $message, true);
     } else {
-      $message = "GANASTE UNA PARTIDA CONTRA ".$loser->username;
+      $message = "GANASTE UNA PARTIDA CONTRA <span>".$loser->username."</span>";
       $this->notifyGame($game->id, $winner->id, $message, true);
-      $message = "PERDISTE UNA PARTIDA CONTRA ".$winner->username;
+      $message = "PERDISTE UNA PARTIDA CONTRA <span>".$winner->username."</span>";
       $this->notifyGame($game->id, $loser->id, $message, true);
     }
   }

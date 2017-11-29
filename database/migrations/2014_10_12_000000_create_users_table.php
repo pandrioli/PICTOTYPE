@@ -19,10 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('avatar');
+            $table->string('avatar')->default('/img/profile.png');
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::table('users')->insert([
+          ['username' => 'test1', 'email' => 'test1', 'password' => bcrypt('asdfasdf')],
+          ['username' => 'test2', 'email' => 'test2', 'password' => bcrypt('asdfasdf')]
+        ]);
     }
 
     /**

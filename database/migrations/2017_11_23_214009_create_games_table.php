@@ -23,7 +23,6 @@ class CreateGamesTable extends Migration
             $table->integer('winner_id')->unsigned()->nullable();
             $table->timestamps();
             $table->foreign('phrase_id')->references('id')->on('phrases');
-            $table->foreign('winner_id')->references('id')->on('users');
           });
     }
 
