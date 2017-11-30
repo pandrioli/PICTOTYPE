@@ -1,7 +1,9 @@
 @php
   $avatar = "";
+  $theme = 'theme1.css';
   if (\Auth::check()) {
     $avatar = \Auth::user()->avatar;
+    $theme = \Auth::user()->theme == 0 ?  'theme1.css' : 'theme2.css';
   }
 @endphp
 
@@ -10,6 +12,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/{{ $theme }}">
     <link rel="stylesheet" href="/css/site_styles.css">
     <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

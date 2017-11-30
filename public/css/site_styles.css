@@ -59,21 +59,20 @@ a {
     opacity: 1;
   }
 }
+@keyframes new_notif {
+  from {
+    opacity: .4;
+  }
+  to {
+    opacity: 1 ;
+  }
+}
 
 .half {
   width: 50%;
 }
 
-.back-color-1 {
-  background-color: rgb(23, 150, 221);
-  box-shadow: 0 0 15px rgb(23,150,221);
-  opacity: .6;
-}
-.back-color-2 {
-  background-color: rgb(221,150,23);
-  box-shadow: 0 0 15px rgb(221,150,23);
-  opacity: .6;
-}
+
 .back-color-3 {
   background-color: rgb(150,150,150);
   box-shadow: 0 0 15px rgb(150,150,150);
@@ -169,15 +168,6 @@ a {
   position: relative;
   float: left;
   font-size: 2.5em;
-}
-
-.logo span:last-child {
-  color: rgb(23, 150, 221);
-  text-shadow: 0 0 15px rgb(23, 150, 221);
-}
-.logo span:first-child {
-  color: rgb(221,150,23);
-  text-shadow: 0 0 15px rgb(221,150,23);
 }
 
 #toggle-menu {
@@ -361,6 +351,34 @@ a {
   animation-duration: 1s;
 }
 
+.home-header {
+  height: 2em;
+  line-height: 2em;
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+
+.home-stats {
+  flex-grow: 1;
+  border-radius: 0px 10px 10px 0px;
+  text-align: center;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.home-stats:hover {
+  opacity: 1;
+}
+
+.home-username {
+  text-align: center;
+  font-size: 1.5em;
+  flex-grow: 2;
+  border-radius: 10px 0px 0px 10px;
+  margin-right: 5px;
+}
+
 .tab-container {
   display: flex;
   align-items: stretch;
@@ -425,6 +443,7 @@ a {
   margin: 10px;
   border-radius: 10px;
   transition: 0.5s;
+  font-size: .8em;
 }
 
 .notification-item span {
@@ -433,7 +452,11 @@ a {
   opacity: .7;
 }
 .notification-new {
-  background-color: rgba(255,255,255,.7);
+  background-color: white;
+  animation-name: new_notif;
+  animation-duration: .5s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
 }
 
 .notification-item:hover {
@@ -441,14 +464,14 @@ a {
   transform: scale(.99);
 }
 
-.notification-number {
+.notification-alert {
   display: inline-block;
   color: white;
   background-color: red;
   border-radius: 50%;
   width: 1.1em;
   height: 1.1em;
-  opacity: .7;
+  opacity: .6;
 }
 
 .games-list-header {
@@ -667,8 +690,8 @@ a {
   }
   .header-item {
     display: block;
-    height: 80px;
-    line-height: 80px;
+    height: 10vh;
+    line-height: 10vh;
     width: 80%;
     float: none;
     margin: 0 auto 15px auto;

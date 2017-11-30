@@ -29,4 +29,24 @@ class APIController extends Controller
     });
     return json_encode($updated_games->values()->all());
   }
+
+  public function newNotifications($timestamp) {
+    $notifications = Auth::user()->notifications->filter(function($notif) use ($timestamp) {
+      return $notif->created_at > $timestamp;
+    });
+    if ($notifications->count() > 0) {
+      $html = view('notification_items',compact('notifications'));
+      return json_encode(['timestamp' => $notifications->values()->first()->created_at->format('Y-m-d H:i:s'), 'html' => (string)$html]);
+    } else {
+      return "{}";
+    }
+  }
+
+  public function notificationsRead() {
+    $notifications = Auth::user()->notifications;
+    foreach ($notifications as $notification) {
+      $notification->read = true;
+      $notification->save();
+    }
+  }
 }

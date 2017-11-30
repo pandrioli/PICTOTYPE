@@ -22,7 +22,7 @@ class UserController extends Controller
         $file = $request->file('avatar');
         if ($file) {
           $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-          $path = 'public/avatars/'.$user->id.'.'.$extension;
+          $path = '/public/avatars/'.$user->id.'.'.$extension;
           Storage::put($path,
                       file_get_contents($file->getRealPath())
                   );
@@ -30,6 +30,13 @@ class UserController extends Controller
           $user->save();
         }
         return redirect()->route('profile');
+    }
+
+    public function changeTheme() {
+      $user = Auth::user();
+      $user->theme = $user->theme == 0 ? 1 : 0;
+      $user->save();
+      return redirect()->route('home');
     }
 
 }

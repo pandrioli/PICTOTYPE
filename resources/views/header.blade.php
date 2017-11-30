@@ -6,8 +6,8 @@
 
 <header class='site-header'>
   <input type='checkbox' id='toggle-checkbox' hidden>
-  <a href='/' class='button logo'>
-    <span>PICTO</span><span>TYPE</span>
+  <a href='{{ $logged ? '/changetheme' : '/' }}' class='button logo'>
+    <span class="color-1">PICTO</span><span class='color-2'>TYPE</span>
   </a>
   <label for="toggle-checkbox" class='header-item button back-color-1' id='toggle-menu'><i class="fa fa-bars" aria-hidden="true"></i></label>
   <div class='header-menu'>

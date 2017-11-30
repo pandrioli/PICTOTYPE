@@ -1,0 +1,18 @@
+.back-color-1 {
+  background-color: rgb(67, 120, 163);
+  box-shadow: 0 0 15px rgb(67, 120, 163);
+  opacity: .6;
+}
+.back-color-2 {
+  background-color: rgb(120,120,120);
+  box-shadow: 0 0 15px rgb(120,120,120);
+  opacity: .6;
+}
+.color-1 {
+  color: rgb(67,120,163);
+  text-shadow: 0 0 15px rgb(67, 120, 163);
+}
+.color-2 {
+  color: rgb(120, 120, 120);
+  text-shadow: 0 0 15px rgb(120, 120, 120);
+}

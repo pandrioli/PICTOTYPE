@@ -1,6 +1,7 @@
 window.addEventListener('load', main);
 
-var ajax;
+var ajax_games;
+var ajax_notif;
 var timestamp;
 var userID;
 
@@ -12,9 +13,12 @@ function main() {
   if (tab=="") tab = 0;
   document.querySelectorAll("input[type='radio']")[tab].checked=true;
   switchPanel(tab);
-  setInterval(getUpdatedGames, 1000);
-  ajax = new XMLHttpRequest();
-  ajax.onload = updateGames;
+  setInterval(getUpdates, 1000);
+  ajax_games = new XMLHttpRequest();
+  ajax_games.onload = updateGames;
+  ajax_notif = new XMLHttpRequest();
+  ajax_notif.onload = updateNotif;
+  updateNotifAlert();
 }
 
 function switchPanel(index) {
@@ -26,21 +30,60 @@ function switchPanel(index) {
   }
   panels[index].style.opacity="1";
   panels[index].style.pointerEvents="all";
+  if (index == 2) notifRead();
 }
 
-function getUpdatedGames() {
-  var url = "/api/updatedusergames/"+timestamp;
-  ajax.open("GET",url);
+function notifRead() {
+  var ajax = new XMLHttpRequest();
+  ajax.open('GET', '/api/notificationsread');
   ajax.send();
+}
+
+
+function updateNotifAlert() {
+  var notif_number = 0;
+  var notif_alert = document.getElementById('notif-alert');
+  var notif = document.getElementById('notifications-container').children;
+  for (var i=1; i<notif.length; i++) {
+    if (notif.item(i).firstElementChild.innerHTML == "0") {
+      notif_number++;
+    }
+  }
+  if (notif_number>0) {
+    notif_alert.style.display = 'inline-block';
+    notif_alert.innerHTML = notif_number;
+  } else {
+    notif_alert.style.display = 'none';
+    notif_alert.innerHTML = '';
+  }
+}
+
+
+function getUpdates() {
+  var url = "/api/updatedusergames/"+timestamp;
+  ajax_games.open("GET",url);
+  ajax_games.send();
+  url = "/api/newnotifications/"+timestamp;
+  ajax_notif.open("GET",url);
+  ajax_notif.send();
+}
+
+function updateNotif() {
+  var notif = JSON.parse(this.responseText);
+  if (notif.html) {
+    timestamp = notif.timestamp;
+    var container = document.getElementById('notifications-container');
+    container.innerHTML = notif.html + container.innerHTML;
+    updateNotifAlert();
+  }
 }
 
 function updateGames() {
   var games = JSON.parse(this.responseText);
   if (games.length>0) {
-    console.log(this.responseText);
     timestamp = games[0].updated_at;
+    games.forEach(updateHTML);
   }
-  games.forEach(updateHTML);
 }
 
 function updateHTML(game) {
@@ -52,7 +95,7 @@ function updateHTML(game) {
     var player = game.players[key];
     if (player.id != userID) {
       opponentDIV.innerHTML = player.username;
-      avatarDIV.style.backgroundImage = 'url("/'+ player.avatar +'")';
+      avatarDIV.style.backgroundImage = 'url("'+ player.avatar +'")';
       console.log(player.avatar);
       avatarDIV.style.backgroundPosition = 'center';
       avatarDIV.style.backgroundRepeat = 'no-repeat';

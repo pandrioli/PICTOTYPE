@@ -2,14 +2,20 @@
 @section('title', 'PICTOTYPE')
 @section('header-button', 'home')
 @section('script', asset('js/home_user.js'))
+@php
+  $notifications = $user->notifications;
+@endphp
 @section('content')
   <div id="timestamp" hidden>{{ $timestamp }}</div>
   <div id="user-id" hidden>{{ $user->id }}</div>
   <div class="center-screen">
     <div class="home-user-container">
-      <div class="form-heading back-color-2">
-        USUARIO: <span>{{$user->username}}</span>
-      </div>
+      <div class="home-header">
+        <div class="home-username back-color-2">
+          {{$user->username}}
+        </div>
+        <a class="home-stats back-color-1">ESTADISTICAS</a>
+    </div>
       <div class="tab-container">
         <input id="tab1" type="radio" name="tabs" value="1" hidden checked onchange="switchPanel(0)">
         <label for="tab1" class="tab back-color-1">
@@ -22,7 +28,7 @@
         <input id="tab3" type="radio" name="tabs" value="3" hidden onchange="switchPanel(2)">
         <label for="tab3" class="tab back-color-1">
           <i class="fa fa-bell" aria-hidden="true"></i>
-          <div class="notification-number">1</div>
+          <div class="notification-alert" id="notif-alert" style="display: none;"></div>
         </label>
       </div>
       <div class="switch-container back-color-1">
@@ -55,20 +61,20 @@
           </div>
         </div>
         <div class="switch-panel">
-          <div class="games-list-header">NOTIFICACIONES RECIBIDAS</div>
-          <div class="item-list">
-            @forelse ($user->notifications as $key=>$notification)
-              @include('notification_item')
-            @empty
-                <div style="text-align: center; margin-top: 100px;">NO HAY NOTIFICACIONES</div>
-            @endforelse
+          <div class="item-list" id="notifications-container">
+            <div class="games-list-header">NOTIFICACIONES RECIBIDAS</div>
+              @if ($notifications)
+              @include('notification_items')
+            @else
+              <div style="text-align: center; margin-top: 100px;">NO HAY NOTIFICACIONES</div>
+            @endif
           </div>
         </div>
       </div>
       <div class="form-button-container">
         <div class="panel-footer back-color-1">NUEVA PARTIDA</div>
         <a class="button form-button back-color-2" href="">PRIVADA</a>
-        <a class="button form-button back-color-1" href="/newgame">PUBLICA</a>
+        <a class="button form-button back-color-2" href="/newgame">PUBLICA</a>
       </div>
     </div>
   </div>
