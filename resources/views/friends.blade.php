@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="form-button-container">
+      <div class="button-container">
       </div>
     </div>
   </div>

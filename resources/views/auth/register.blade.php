@@ -3,9 +3,9 @@
 @section('header-button', 'register')
 @section('content')
       <div class="center-screen">
-        <div class="form-container">
-          <div class="form-heading back-color-2">REGISTRO DE USUARIO</div>
-          <div class="form-body back-color-1">
+        <div class="window-container w500">
+          <div class="window-header back-color-2">REGISTRO DE USUARIO</div>
+          <div class="panel back-color-1">
               <form role="form" method="POST" action="{{ url('/register') }}" id="register_form">
                   {{ csrf_field() }}
 
@@ -51,7 +51,7 @@
 
               </form>
           </div>
-          <div class="form-button-container">
+          <div class="button-container">
             <a class="button form-button back-color-2" href="/">CANCELAR</a>
             <button type="submit" class="button form-button back-color-1 font" form="register_form">
                 REGISTRARSE

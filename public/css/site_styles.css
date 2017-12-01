@@ -132,11 +132,67 @@ a {
   transform: scale(1.03);
 }
 
+.button-container {
+  display: flex;
+  flex-flow: row;
+  align-items: stretch;
+}
+
+
+.button-container .button {
+  width: auto;
+  display: inline-block;
+  flex-grow: 1;
+  margin-top: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.button-container .button:last-child {
+  margin-right: 0;
+}
+
+
 
 .site-container {
   max-width: 1000px;
   margin: 0 auto;
 }
+
+.window-container {
+  animation-name: fade_in;
+  animation-duration: 1s;
+}
+
+.window-header {
+  display: block;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.window-header span {
+  font-size: 1.5em;
+  color: yellow;
+}
+
+
+.panel {
+  border-radius: 10px;
+  padding: 10px 15px;
+  overflow: hidden;
+}
+
+.w500 {
+  width: 500px;
+}
+
+.w700 {
+  width: 700px;
+}
+
+
 
 /* HEADER --------------------------------------------------------------------*/
 
@@ -177,7 +233,7 @@ a {
   display: none;
 }
 
-/* HOME --------------------------------------------------------------------*/
+/* HOME NOT LOGGED IN--------------------------------------------------------------------*/
 
 .home-image-container {
   position: relative;
@@ -213,55 +269,6 @@ a {
 
 /* FORMS --------------------------------------------------------------------*/
 
-.form-container {
-  width: 500px;
-  animation-name: fade_in;
-  animation-duration: 1s;
-}
-
-.form-heading {
-  display: block;
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px auto;
-  text-align: center;
-}
-
-.form-heading span {
-  font-size: 1.5em;
-  color: yellow;
-}
-
-.form-body {
-  padding: 10px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.form-body form {
-  width: 95%;
-  margin: auto;
-}
-
-.form-button-container {
-  display: flex;
-  flex-flow: row;
-  align-items: stretch;
-}
-
-
-.form-button {
-  width: auto;
-  display: inline-block;
-  flex-grow: 1;
-  margin-top: 10px;
-  margin-right: 10px;
-  text-align: center;
-}
-
-.form-button:last-child {
-  margin-right: 0;
-}
 
 .form-input-text {
   display: block;
@@ -313,7 +320,6 @@ a {
 
 .profile-container {
   width: 700px;
-  height: 350px;
   animation-name: fade_in;
   animation-duration: 1s;
 }
@@ -606,13 +612,6 @@ a {
 
 /* GAME-RESULTS --------------------------------------------------------------------*/
 
-.game-results-container {
-  width: 700px;
-  animation-name: fade_in;
-  animation-duration: 1s;
-  border-radius: 10px;
-}
-
 .user-results-panel {
   position: relative;
   padding: 10px;
@@ -662,7 +661,7 @@ a {
 
 
 @media (max-width: 950px) {
-  .profile-container, .home-user-container, .game-results-container {
+  .w700 {
     width: 95vw;
   }
 
@@ -730,7 +729,7 @@ a {
 }
 
 @media (max-width: 600px) {
-  .form-container {
+  .w500 {
     width: 95%;
   }
   .home-image-container {

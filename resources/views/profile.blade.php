@@ -7,9 +7,9 @@
           document.getElementById('profile').submit();
         }
       </script>
-      <div class='center-screen'><div class='profile-container'>
-        <div class='form-heading back-color-2'>USUARIO: <span>{{$user->username}}</span></div>
-        <div class='profile-panel back-color-1'>
+      <div class='center-screen'><div class='window-container w700'>
+        <div class='window-header back-color-2'>USUARIO: <span>{{$user->username}}</span></div>
+        <div class='panel back-color-1'>
           <div class="profile-image avatar"></div>
           <div class="profile-form">
             <form id="profile" method="post" enctype="multipart/form-data">
@@ -23,11 +23,11 @@
             </form>
           </div>
         </div>
-        <div class="form-button-container">
-            <label for="avatar" class="button form-button font back-color-2">IMAGEN</label>
+        <div class="button-container">
+            <label for="avatar" class="button font back-color-2">IMAGEN</label>
             <input form="profile" type="file" name="avatar" id="avatar" accept="image/*" hidden onchange='submit()'>
-            <a class="button form-button back-color-2" href="">AMIGOS</a>
-            <button form="profile" type="submit" class="button form-button font back-color-1">
+            <a class="button back-color-2" href="">AMIGOS</a>
+            <button form="profile" type="submit" class="button font back-color-1">
                 GUARDAR DATOS
             </button>
         </div></div>

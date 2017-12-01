@@ -4,9 +4,9 @@
 @endif
 @section('content')
   <div class="center-screen">
-    <div class='form-container'>
-      <div class='form-heading back-color-2'>CREAR NUEVA PARTIDA</div>
-      <div class="form-body back-color-1">
+    <div class='window-container w500'>
+      <div class='window-header back-color-2'>CREAR NUEVA PARTIDA</div>
+      <div class="panel back-color-1">
         <form class="font" action="/creategame" method="post" id="create-game" style="text-align: center;">
           {{ csrf_field() }}
           <input type="text" name="practique" value="{{ $practique }}" hidden>
@@ -37,7 +37,7 @@
         </div>
         </form>
       </div>
-      <div class="form-button-container">
+      <div class="button-container">
         <a class="button form-button back-color-2" href="{{ url('/') }}">CANCELAR</a>
         <button form="create-game" type="submit" class="button form-button font back-color-1">
             CREAR PARTIDA

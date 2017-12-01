@@ -9,7 +9,7 @@
   <div id="timestamp" hidden>{{ $timestamp }}</div>
   <div id="user-id" hidden>{{ $user->id }}</div>
   <div class="center-screen">
-    <div class="home-user-container">
+    <div class="window-container w700">
       <div class="home-header">
         <div class="home-username back-color-1">
           {{$user->username}}
@@ -71,10 +71,10 @@
           </div>
         </div>
       </div>
-      <div class="form-button-container">
+      <div class="button-container">
         <div class="panel-footer back-color-1">NUEVA PARTIDA</div>
-        <a class="button form-button back-color-2" href="">PRIVADA</a>
-        <a class="button form-button back-color-2" href="/newgame">PUBLICA</a>
+        <a class="button back-color-2" href="">PRIVADA</a>
+        <a class="button back-color-2" href="/newgame">PUBLICA</a>
       </div>
     </div>
   </div>

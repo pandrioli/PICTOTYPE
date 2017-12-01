@@ -25,8 +25,8 @@
     }
   </style>
   <div class="center-screen">
-    <div class="game-results-container">
-      <div class="form-heading back-color-2">
+    <div class="window-container w700">
+      <div class="window-header back-color-2">
         RESULTADOS - MODO {{ $game->modeString() }}
       </div>
       @if ($game->state == Game::STATE_CANCELLED)
@@ -81,7 +81,7 @@
             @endif
         </div>
       @endif
-      <div class="form-button-container">
+      <div class="button-container">
       @if ($player_state == GAME::PLAYER_DONE)
         <a class="button form-button back-color-1" href="/">PANTALLA PRINCIPAL</a>
       @else

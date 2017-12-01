@@ -2,8 +2,8 @@
 @section('script', asset('js/available.js'))
 @section('content')
   <div class="center-screen">
-    <div class="form-container">
-      <div class="form-heading back-color-2">
+    <div class="window-container w500">
+      <div class="window-header back-color-2">
         SELECCIONE MODO DE JUEGO
       </div>
       <a href="/joinpublicgame/0" class="button game-mode-button back-color-1">
@@ -20,7 +20,7 @@
         <div id="mode1-available">
         </div>
       </a>
-      <div class="form-button-container">
+      <div class="button-container">
         <a class="button form-button back-color-2" href="/">CANCELAR</a>
         <a class="button form-button back-color-1" href="/creategame/real">CREAR NUEVA PARTIDA</a>
       </div>

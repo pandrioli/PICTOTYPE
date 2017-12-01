@@ -3,9 +3,9 @@
 @section('header-button', 'login')
 @section('content')
             <div class="center-screen">
-              <div class="form-container">
-                  <div class="form-heading back-color-2">INGRESO AL SISTEMA</div>
-                  <div class="form-body back-color-1">
+              <div class="window-container w500">
+                  <div class="window-header back-color-2">INGRESO AL SISTEMA</div>
+                  <div class="panel back-color-1">
                       <form id="login" class="font" role="form" method="POST" action="{{ url('/login') }}">
                           {{ csrf_field() }}
 
@@ -35,7 +35,7 @@
                             </div>
                         </form>
               </div>
-              <div class="form-button-container">
+              <div class="button-container">
                 <a class="button form-button back-color-2" href="{{ url('/password/reset') }}">OLVIDE MI PASSWORD</a>
                 <button form="login" type="submit" class="button form-button font back-color-1">
                     INGRESAR
