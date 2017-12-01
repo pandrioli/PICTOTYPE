@@ -50,8 +50,13 @@ class User extends Authenticatable
 
     public function gamesFinished() {
       return $this->belongsToMany(Game::class, 'games_users')->where('practique',0)->withPivot('state', 'time', 'points')
-        ->where('games.state', '>=', Game::STATE_FINISHED)
+        ->where('games.state', Game::STATE_FINISHED)
         ->orderBy('games.id', 'desc');
     }
-
+    public function friends() {
+      return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')->withPivot('accepted');
+    }
+    public function isFriend($user_id) {
+      return $this->friends->where('pivot.friend_id', $user_id)->where('pivot.accepted', 1)->count() > 0;
+    }
 }

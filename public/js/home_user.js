@@ -30,14 +30,19 @@ function switchPanel(index) {
   }
   panels[index].style.opacity="1";
   panels[index].style.pointerEvents="all";
-  if (index == 2) setCookie('read', 'true');
-  else if (getCookie('read')) notifRead();
+  if (index == 2) setCookie('reading', 'true');
+  else if (getCookie('reading')) notifRead();
 }
 
 function notifRead() {
-  setCookie('read', '');
+  setCookie('reading', '');
   var ajax = new XMLHttpRequest();
-  ajax.open('GET', '/api/notificationsread');
+  ajax.onload = function() {
+    var container = document.getElementById('notifications-container');
+    container.innerHTML = this.responseText;
+    updateNotifAlert();
+  }
+  ajax.open('GET', '/api/notifications/setallreadandget');
   ajax.send();
 }
 
@@ -63,10 +68,10 @@ function updateNotifAlert() {
 
 
 function getUpdates() {
-  var url = "/api/updatedusergames/"+timestamp;
+  var url = "/api/games/updated/"+timestamp;
   ajax_games.open("GET",url);
   ajax_games.send();
-  url = "/api/newnotifications/"+timestamp;
+  url = "/api/notifications/new/"+timestamp;
   ajax_notif.open("GET",url);
   ajax_notif.send();
 }

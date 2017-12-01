@@ -39,4 +39,9 @@ class UserController extends Controller
       return redirect()->route('home');
     }
 
+    public function friendsPage($game = null) {
+      $user = Auth::user();
+      return view('friends', compact('user'));
+    }
+
 }

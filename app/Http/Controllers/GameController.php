@@ -88,7 +88,7 @@ class GameController extends Controller
       $game->setPlayerTime($request->input('time'));
       $game->setPlayerPoints($request->input('points'));
       $opponent = $game->opponentPlayer();
-      if ($opponent && $game->getOpponentState()==Game::PLAYER_DONE) {
+      if ($opponent && $game->getOpponentState()==Game::PLAYER_DONE && $game->state != Game::STATE_CANCELLED) {
         $win = 0;
         if ($game->mode == 0) {
           if ($game->getPlayerTime() < $game->getOpponentTime()) $win = 1;
@@ -124,6 +124,7 @@ class GameController extends Controller
         $game->setPlayerState(Game::PLAYER_DONE);
         if ($game->opponentPlayer()) {
           $game->setOpponentState(Game::PLAYER_DONE);
+          $this->notifyman->notifyGameCancelled($game);
         }
         $game->save();
       }

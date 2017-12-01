@@ -43,10 +43,12 @@ class APIController extends Controller
   }
 
   public function notificationsRead() {
-    $notifications = Auth::user()->notifications;
+    $notifications = Auth::user()->notifications->where('read', 0)->all();
     foreach ($notifications as $notification) {
-      $notification->read = true;
+      $notification->read = 1;
       $notification->save();
     }
+    $notifications = Auth::user()->notifications;
+    return view('notification_items', compact('notifications'));
   }
 }

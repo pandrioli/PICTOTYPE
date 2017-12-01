@@ -27,8 +27,10 @@ Route::get ('/gameplay/{id}', 'GameController@playGame')->name('gameplay');
 Route::post('/finishgame', 'GameController@finishGame');
 Route::get ('/cancelgame/{game_id}/{user_id}', 'GameController@cancelGame');
 
+Route::get('/friends', 'UserController@friendsPage')->middleware('auth');
+
 //API
-Route::get('/api/availablepublicgames', 'APIController@availablePublicGames');
-Route::get('/api/updatedusergames/{timestamp}', 'APIController@updatedUserGames');
-Route::get('/api/newnotifications/{timestamp}', 'APIController@newNotifications');
-Route::get('/api/notificationsread', 'APIController@notificationsRead');
+Route::get('/api/games/availablepublic', 'APIController@availablePublicGames');
+Route::get('/api/games/updated/{timestamp}', 'APIController@updatedUserGames');
+Route::get('/api/notifications/new/{timestamp}', 'APIController@newNotifications');
+Route::get('/api/notifications/setallreadandget', 'APIController@notificationsRead');

@@ -13,7 +13,7 @@ function startAvailableTimer() {
 }
 
 function queryAvailable() {
-  ajax.open("GET", "/api/availablepublicgames", true);
+  ajax.open("GET", "/api/games/availablepublic", true);
   ajax.send();
 }
 
