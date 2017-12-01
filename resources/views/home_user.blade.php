@@ -11,10 +11,10 @@
   <div class="center-screen">
     <div class="home-user-container">
       <div class="home-header">
-        <div class="home-username back-color-2">
+        <div class="home-username back-color-1">
           {{$user->username}}
         </div>
-        <a class="home-stats back-color-1">ESTADISTICAS</a>
+        <a class="home-stats back-color-2">ESTADISTICAS</a>
     </div>
       <div class="tab-container">
         <input id="tab1" type="radio" name="tabs" value="1" hidden checked onchange="switchPanel(0)">
@@ -61,9 +61,9 @@
           </div>
         </div>
         <div class="switch-panel">
+          <div class="games-list-header">NOTIFICACIONES RECIBIDAS</div>
           <div class="item-list" id="notifications-container">
-            <div class="games-list-header">NOTIFICACIONES RECIBIDAS</div>
-              @if ($notifications)
+              @if ($notifications->count() > 0)
               @include('notification_items')
             @else
               <div style="text-align: center; margin-top: 100px;">NO HAY NOTIFICACIONES</div>

@@ -407,6 +407,9 @@ a {
 }
 
 .switch-panel {
+  display: flex;
+  align-items: stretch;
+  flex-flow: column;
   top:0;
   left:0;
   position: absolute;
@@ -430,20 +433,25 @@ a {
 
 
 .item-list {
-  height: 100%;
+  flex-grow: 1;
   padding-right: 15px;
   overflow-y: auto;
+}
+
+.item-list div {
+  cursor: default;
 }
 
 .notification-item {
   display: block;
   background-color: rgba(255,255,255,.4);
-  color: rgba(0,0,0,.5);
+  color: rgba(0,0,0,.6);
   padding: 10px;
-  margin: 10px;
+  margin: 5px 10px;
   border-radius: 10px;
   transition: 0.5s;
   font-size: .8em;
+  text-align: center;
 }
 
 .notification-item span {
@@ -452,11 +460,7 @@ a {
   opacity: .7;
 }
 .notification-new {
-  background-color: white;
-  animation-name: new_notif;
-  animation-duration: .5s;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
+  background-color: rgba(200,255,200,.8);
 }
 
 .notification-item:hover {
@@ -482,6 +486,7 @@ a {
   margin: 20px 5px 5px 5px;
   border-radius: 10px;
   text-align: center;
+  cursor: default;
 }
 
 .games-list-labels {

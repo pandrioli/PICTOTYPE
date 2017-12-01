@@ -13,7 +13,7 @@ function main() {
   if (tab=="") tab = 0;
   document.querySelectorAll("input[type='radio']")[tab].checked=true;
   switchPanel(tab);
-  setInterval(getUpdates, 1000);
+  setInterval(getUpdates, 2000);
   ajax_games = new XMLHttpRequest();
   ajax_games.onload = updateGames;
   ajax_notif = new XMLHttpRequest();
@@ -30,10 +30,12 @@ function switchPanel(index) {
   }
   panels[index].style.opacity="1";
   panels[index].style.pointerEvents="all";
-  if (index == 2) notifRead();
+  if (index == 2) setCookie('read', 'true');
+  else if (getCookie('read')) notifRead();
 }
 
 function notifRead() {
+  setCookie('read', '');
   var ajax = new XMLHttpRequest();
   ajax.open('GET', '/api/notificationsread');
   ajax.send();
@@ -44,8 +46,9 @@ function updateNotifAlert() {
   var notif_number = 0;
   var notif_alert = document.getElementById('notif-alert');
   var notif = document.getElementById('notifications-container').children;
-  for (var i=1; i<notif.length; i++) {
-    if (notif.item(i).firstElementChild.innerHTML == "0") {
+  for (var i=0; i<notif.length; i++) {
+    var read = notif.item(i).firstElementChild;
+    if (read && read.innerHTML == "0") {
       notif_number++;
     }
   }
@@ -87,6 +90,7 @@ function updateGames() {
 }
 
 function updateHTML(game) {
+  console.log(1);
   var gameDIV = document.getElementById('game-'+game.id);
   var opponentDIV = gameDIV.querySelector(".game-item-opponent");
   var avatarDIV = gameDIV.querySelector(".game-item-avatar");
