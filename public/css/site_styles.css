@@ -152,8 +152,6 @@ a {
   margin-right: 0;
 }
 
-
-
 .site-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -530,6 +528,7 @@ a {
   display: block;
   position: relative;
   background-color: rgba(255,255,255,.4);
+  color: black;
   height: 50px;
   line-height: 40px;
   padding: 5px 60px 5px 55px;
@@ -657,6 +656,40 @@ a {
   transform: scale(.95);
 }
 
+/* FRIENDS and USER SEARCH --------------------------------------------------------------------*/
+
+.user-item {
+  display: block;
+  position: relative;
+  background-color: rgba(255,255,255,.4);
+  color: black;
+  height: 50px;
+  line-height: 40px;
+  padding: 5px 10px 5px 55px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.user-item:hover {
+  background-color: white;
+  transform: scale(.99);
+}
+
+.user-item-username {
+  float: left;
+  color: black;
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+.user-item-fullname {
+  float: right;
+  color: black;
+  opacity: .7;
+}
+
+
 /* MEDIA-RULES --------------------------------------------------------------------*/
 
 
@@ -756,6 +789,17 @@ a {
   .game-item-result {
     right: 5px;
   }
+
+  .user-item {
+    line-height: 20px;
+  }
+  .user-item-username {
+    float: none;
+  }
+  .user-item-fullname {
+    float: none;
+  }
+
 }
 
 @media (max-width: 450px) {

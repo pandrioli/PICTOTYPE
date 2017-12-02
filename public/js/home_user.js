@@ -6,10 +6,13 @@ var timestamp;
 var userID;
 
 function main() {
+  setCookie('user-search-text', '');
+  setCookie('friend-search-text', '');
+  setCookie('active-user-tab', 0);
   userID = parseInt(document.getElementById('user-id').innerHTML);
   timestamp = document.getElementById('timestamp').innerHTML;
-  document.querySelectorAll('.header-item').forEach(function(e) { e.addEventListener('click', function() {switchPanel(0);})});
-  var tab = getCookie('active_tab');
+  document.querySelectorAll('.header-item, .button').forEach(function(e) { e.addEventListener('click', function() {switchPanel(0);})});
+  var tab = getCookie('active-home-tab');
   if (tab=="") tab = 0;
   document.querySelectorAll("input[type='radio']")[tab].checked=true;
   switchPanel(tab);
@@ -22,7 +25,7 @@ function main() {
 }
 
 function switchPanel(index) {
-  setCookie('active_tab', index)
+  setCookie('active-home-tab', index)
   var panels = document.getElementsByClassName('switch-panel');
   for (var i=0; i< panels.length; i++) {
     panels[i].style.opacity="0";

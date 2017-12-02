@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Storage;
+use App\User;
 
 class UserController extends Controller
 {
@@ -41,7 +42,21 @@ class UserController extends Controller
 
     public function friendsPage($game = null) {
       $user = Auth::user();
-      return view('friends', compact('user'));
+      return view('friends', compact('user', 'game'));
+    }
+
+    public function viewUser($id) {
+      $user = User::find($id);
+      return view('view_user', compact('user'));
+    }
+
+    public function searchUsers($query) {
+      $users= User::where(function ($usr) use ($query) {
+        $usr->where('username', 'like', $query.'%')
+          ->orWhere('first_name', 'like', $query.'%')
+          ->orWhere('last_name', 'like', $query.'%');
+      })->get();
+      return view('user_items', compact('users'));
     }
 
 }

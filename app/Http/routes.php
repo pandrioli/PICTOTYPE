@@ -28,6 +28,9 @@ Route::post('/finishgame', 'GameController@finishGame');
 Route::get ('/cancelgame/{game_id}/{user_id}', 'GameController@cancelGame');
 
 Route::get('/friends', 'UserController@friendsPage')->middleware('auth');
+Route::get('/user/{id}', 'UserController@viewUser')->middleware('auth');
+Route::get('/searchusers/{query}', 'UserController@searchUsers')->middleware('auth');
+
 
 //API
 Route::get('/api/games/availablepublic', 'APIController@availablePublicGames');

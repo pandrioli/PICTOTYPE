@@ -26,7 +26,7 @@
         <div class="button-container">
             <label for="avatar" class="button font back-color-2">IMAGEN</label>
             <input form="profile" type="file" name="avatar" id="avatar" accept="image/*" hidden onchange='submit()'>
-            <a class="button back-color-2" href="">AMIGOS</a>
+            <a class="button back-color-2" href="/friends">AMIGOS</a>
             <button form="profile" type="submit" class="button font back-color-1">
                 GUARDAR DATOS
             </button>

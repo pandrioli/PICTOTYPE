@@ -24,6 +24,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function fullName() {
+      return trim($this->first_name.' '.$this->last_name);
+    }
+
     public function stats() {
       return $this->hasOne(UserStat::class);
     }
