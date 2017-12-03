@@ -1,14 +1,14 @@
 window.addEventListener('load', main);
 
-var ajax_games;
-var ajax_notif;
 var timestamp;
 var userID;
+var container_notif;
 
 function main() {
   setCookie('user-search-text', '');
   setCookie('friend-search-text', '');
   setCookie('active-user-tab', 0);
+  container_notif = document.getElementById('notifications-container');
   userID = parseInt(document.getElementById('user-id').innerHTML);
   timestamp = document.getElementById('timestamp').innerHTML;
   document.querySelectorAll('.header-item, .button').forEach(function(e) { e.addEventListener('click', function() {switchPanel(0);})});
@@ -17,10 +17,6 @@ function main() {
   document.querySelectorAll("input[type='radio']")[tab].checked=true;
   switchPanel(tab);
   setInterval(getUpdates, 2000);
-  ajax_games = new XMLHttpRequest();
-  ajax_games.onload = updateGames;
-  ajax_notif = new XMLHttpRequest();
-  ajax_notif.onload = updateNotif;
   updateNotifAlert();
 }
 
@@ -34,15 +30,23 @@ function switchPanel(index) {
   panels[index].style.opacity="1";
   panels[index].style.pointerEvents="all";
   if (index == 2) setCookie('reading', 'true');
-  else if (getCookie('reading')) notifRead();
+  else if (getCookie('reading')) notifAllRead();
 }
 
-function notifRead() {
+function notifRead(index) {
+  var notif = container_notif.children.item(index);
+  notif.firstElementChild.innerHTML = "1";
+  updateNotifAlert();
+  var ajax = new XMLHttpRequest();
+  ajax.open('GET', '/api/notifications/setread/' + notif.children.item(1).innerHTML);
+  ajax.send();
+}
+
+function notifAllRead() {
   setCookie('reading', '');
   var ajax = new XMLHttpRequest();
   ajax.onload = function() {
-    var container = document.getElementById('notifications-container');
-    container.innerHTML = this.responseText;
+    container_notif.innerHTML = this.responseText;
     updateNotifAlert();
   }
   ajax.open('GET', '/api/notifications/setallreadandget');
@@ -53,7 +57,7 @@ function notifRead() {
 function updateNotifAlert() {
   var notif_number = 0;
   var notif_alert = document.getElementById('notif-alert');
-  var notif = document.getElementById('notifications-container').children;
+  var notif = container_notif.children;
   for (var i=0; i<notif.length; i++) {
     var read = notif.item(i).firstElementChild;
     if (read && read.innerHTML == "0") {
@@ -71,9 +75,13 @@ function updateNotifAlert() {
 
 
 function getUpdates() {
+  var ajax_games = new XMLHttpRequest();
+  ajax_games.onload = updateGames;
   var url = "/api/games/updated/"+timestamp;
   ajax_games.open("GET",url);
   ajax_games.send();
+  var ajax_notif = new XMLHttpRequest();
+  ajax_notif.onload = updateNotif;
   url = "/api/notifications/new/"+timestamp;
   ajax_notif.open("GET",url);
   ajax_notif.send();
@@ -83,8 +91,7 @@ function updateNotif() {
   var notif = JSON.parse(this.responseText);
   if (notif.html) {
     timestamp = notif.timestamp;
-    var container = document.getElementById('notifications-container');
-    container.innerHTML = notif.html + container.innerHTML;
+    container_notif.innerHTML = notif.html + container_notif.innerHTML;
     updateNotifAlert();
   }
 }

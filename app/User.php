@@ -11,6 +11,13 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+     const FRIENDSHIP_NONE = 0;
+     const FRIENDSHIP_REQUESTED = 1;
+     const FRIENDSHIP_PENDING = 2;
+     const FRIENDSHIP_ACCEPTED = 3;
+
+
     protected $fillable = [
         'username', 'email', 'password', 'first_name', 'last_name', 'avatar'
     ];
@@ -57,10 +64,23 @@ class User extends Authenticatable
         ->where('games.state', Game::STATE_FINISHED)
         ->orderBy('games.id', 'desc');
     }
+    public function friendsAccepted() {
+      return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')->withPivot('accepted')->where('friends.accepted', 1)->orderBy('username', 'asc')  ;
+    }
     public function friends() {
       return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')->withPivot('accepted');
     }
-    public function isFriend($user_id) {
-      return $this->friends->where('pivot.friend_id', $user_id)->where('pivot.accepted', 1)->count() > 0;
+
+    public function friendship($user_id) {
+      $user = User::find($user_id);
+      $myfriend = $this->friends->where('pivot.friend_id', $user_id)->first();
+      $hisfriend = $user->friends->where('pivot.friend_id', $this->id)->first();
+      $status = User::FRIENDSHIP_NONE;
+      if ($myfriend) {
+        $status = $myfriend->pivot->accepted ? User::FRIENDSHIP_ACCEPTED : User::FRIENDSHIP_REQUESTED;
+      } else if ($hisfriend) {
+        $status = User::FRIENDSHIP_PENDING;
+      }
+      return $status;
     }
 }

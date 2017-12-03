@@ -8,6 +8,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Game;
+use App\Notification;
 
 use Config;
 
@@ -35,20 +36,27 @@ class APIController extends Controller
       return $notif->created_at > $timestamp;
     });
     if ($notifications->count() > 0) {
-      $html = view('notification_items',compact('notifications'));
+      $html = view('includes/notification_items',compact('notifications'));
       return json_encode(['timestamp' => $notifications->values()->first()->created_at->format('Y-m-d H:i:s'), 'html' => (string)$html]);
     } else {
       return "{}";
     }
   }
 
-  public function notificationsRead() {
+  public function notificationRead($id) {
+    $notification = Notification::find($id);
+    $notification->read = 1;
+    $notification->save();
+    return "";
+  }
+
+  public function notificationsAllRead() {
     $notifications = Auth::user()->notifications->where('read', 0)->all();
     foreach ($notifications as $notification) {
       $notification->read = 1;
       $notification->save();
     }
     $notifications = Auth::user()->notifications;
-    return view('notification_items', compact('notifications'));
+    return view('includes/notification_items', compact('notifications'));
   }
 }

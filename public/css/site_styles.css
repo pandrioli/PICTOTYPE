@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  height: 100%;
   background-color: black;
   color: white;
   font-size: 10px;
@@ -152,8 +153,20 @@ a {
   margin-right: 0;
 }
 
+.back-button {
+  margin-top: 20px;
+  width: 150px;
+  left: 0;
+}
+
+.back-button div {
+  display: inline-block;
+  margin-left: 10px;
+}
+
 .site-container {
   max-width: 1000px;
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -475,7 +488,7 @@ a {
 }
 
 .notification-item:hover {
-  background: white;
+  background-color: white;
   transform: scale(.99);
 }
 

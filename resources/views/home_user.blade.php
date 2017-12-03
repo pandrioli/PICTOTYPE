@@ -41,20 +41,20 @@
               <div class="games-list-header">PARTIDAS PENDIENTES DE JUGAR</div>
             @endif
             @foreach ($user->gamesToPlay as $key=>$game)
-              @include('game_item')
+              @include('includes/game_item')
             @endforeach
             @if ($user->gamesPlayed->count()>0)
               <div class="games-list-header">ESPERANDO QUE JUEGUE EL OPONENTE</div>
             @endif
             @foreach ($user->gamesPlayed as $key=>$game)
-              @include('game_item')
+              @include('includes/game_item')
             @endforeach
           </div>
         </div>
         <div class="switch-panel">
           <div class="item-list">
             @forelse ($user->gamesFinished as $key=>$game)
-              @include('game_item')
+              @include('includes/game_item')
             @empty
                 <div style="text-align: center; margin-top: 100px;">NO HAY PARTIDAS FINALIZADAS</div>
             @endforelse
@@ -64,7 +64,7 @@
           <div class="games-list-header">NOTIFICACIONES RECIBIDAS</div>
           <div class="item-list" id="notifications-container">
               @if ($notifications->count() > 0)
-              @include('notification_items')
+              @include('includes/notification_items')
             @else
               <div style="text-align: center; margin-top: 100px;">NO HAY NOTIFICACIONES</div>
             @endif
@@ -73,8 +73,8 @@
       </div>
       <div class="button-container">
         <div class="panel-footer back-color-1">NUEVA PARTIDA</div>
-        <a class="button back-color-2" href="/friends">PRIVADA</a>
-        <a class="button back-color-2" href="/newgame">PUBLICA</a>
+        <a class="button back-color-2" href="/user/friends">PRIVADA</a>
+        <a class="button back-color-2" href="/game/new">PUBLICA</a>
       </div>
     </div>
   </div>

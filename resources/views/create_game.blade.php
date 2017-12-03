@@ -7,9 +7,10 @@
     <div class='window-container w500'>
       <div class='window-header back-color-2'>CREAR NUEVA PARTIDA</div>
       <div class="panel back-color-1">
-        <form class="font" action="/creategame" method="post" id="create-game" style="text-align: center;">
+        <form class="font" action="/game/create" method="post" id="create-game" style="text-align: center;">
           {{ csrf_field() }}
           <input type="text" name="practique" value="{{ $practique }}" hidden>
+          <input type="text" name="user_id" value="{{ $user_id }}" hidden>
           MODO:
           <input hidden type="radio" class="form-radio" name="mode" id="mode0" value="0" checked>
           <label for="mode0" class="form-option">MEJOR TIEMPO</label>

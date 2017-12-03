@@ -1,5 +1,5 @@
 @foreach ($users as $other_user)
-  <a id='user-{{ $other_user->id }}' class='user-item' href="/user/{{$other_user->id}}">
+  <a id='user-{{ $other_user->id }}' class='user-item' href="/user/view/{{$other_user->id}}/friends">
     <style>
       #user-avatar-{{ $other_user->id }} {
         background: url({{$other_user->avatar}});

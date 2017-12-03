@@ -22,7 +22,7 @@
     <div><i class="fa fa-trophy" aria-hidden="true"></i></div>
   </div>
 @endif
-<a id='game-{{ $game->id }}' class='game-item' href="/viewgame/{{ $game->id }}">
+<a id='game-{{ $game->id }}' class='game-item' href="/game/view/{{ $game->id }}">
   <div id="opponent-avatar-{{ $game->id }}" class='game-item-avatar'></div>
   <div class='game-item-opponent'>
     @if ($game->state == Game::STATE_CANCELLED)

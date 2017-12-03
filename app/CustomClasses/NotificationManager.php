@@ -8,6 +8,23 @@ use App\Notification;
 
 class NotificationManager {
 
+  public function notifyGameCreated($game_id, $user_id) {
+    $message = "<span>".Auth::user()->username."</span> CREO UNA PARTIDA CON VOS";
+    $this->notifyGame($game_id, $user_id, $message, true);
+  }
+  public function notifyGameInvitation($game_id, $user_id) {
+    $message = "<span>".Auth::user()->username."</span> TE INVITO A UNA PARTIDA";
+    $this->notifyGame($game_id, $user_id, $message, true);
+  }
+  public function notifyGameAccepted($game_id, $user_id) {
+    $message = "<span>".Auth::user()->username."</span> ACEPTO TU INVITACION";
+    $this->notifyGame($game_id, $user_id, $message, true);
+  }
+  public function notifyGameRejected($game_id, $user_id) {
+    $message = "<span>".Auth::user()->username."</span> RECHAZO TU INVITACION";
+    $this->notifyGame($game_id, $user_id, $message, false);
+  }
+
   public function notifyGameFinished(Game $game) {
     $user1 = $game->currentPlayer();
     $user2 = $game->opponentPlayer();
@@ -20,7 +37,7 @@ class NotificationManager {
       $loser = $user1;
     }
     if (!$game->winner_id) {
-      $message = "</span>EMPATASTE</span> UNA PARTIDA CON <span>".$user2->username."</span>";
+      $message = "<span>EMPATASTE</span> UNA PARTIDA CON <span>".$user2->username."</span>";
       $this->notifyGame($game->id, $user1->id, $message, true);
       $message = "<span>EMPATASTE</span> UNA PARTIDA CON <span>".$user1->username."</span>";
       $this->notifyGame($game->id, $user2->id, $message, true);
@@ -35,8 +52,22 @@ class NotificationManager {
   public function notifyGameCancelled(Game $game) {
     $message = "<span>".Auth::user()->username."</span> CANCELO UNA PARTIDA";
     $user_id = $game->opponentPlayer()->id;
-    $this->notifyGame($game->id, $user_id, $message, false);
+    $this->notifyGame($game->id, $user_id, $message, true);
   }
+
+  public function notifyFriendshipRequest($user_id) {
+    $message = "<span>".Auth::user()->username."</span> QUIERE SER TU AMIGO";
+    $this->notifyFriendship($user_id, $message);
+  }
+  public function notifyFriendshipAccepted($user_id) {
+    $message = "<span>".Auth::user()->username."</span> ACEPTO TU AMISTAD";
+    $this->notifyFriendship($user_id, $message);
+  }
+  public function notifyFriendshipCancelled($user_id) {
+    $message = "<span>".Auth::user()->username."</span> CANCELO TU AMISTAD";
+    $this->notifyFriendship($user_id, $message);
+  }
+
 
   private function notifyGame($game_id, $user_id, $message, $clickeable) {
     $notification = new Notification();
@@ -47,4 +78,16 @@ class NotificationManager {
     $notification->clickeable = $clickeable;
     $notification->save();
   }
+
+  private function notifyFriendship($user_id, $message) {
+    $notification = new Notification();
+    $notification->type = Notification::NOTIFY_FRIENDSHIP;
+    $notification->user_id = $user_id;
+    $notification->sender_id = Auth::user()->id;
+    $notification->message = $message;
+    $notification->clickeable = true;
+    $notification->save();
+  }
+
+
 }

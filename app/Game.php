@@ -10,11 +10,12 @@ class Game extends Model
   const IMAGE_COUNT = 24;
   const MODE_TIME = 0;
   const MODE_POINTS = 1;
-  const STATE_JUST_CREATED = 0;
+  const STATE_INVITATION = 0;
   const STATE_WAITING_OPPONENT = 1;
   const STATE_WAITING_PLAYS = 2;
   const STATE_FINISHED = 3;
   const STATE_CANCELLED = 4;
+  const STATE_REJECTED = 5;
   const PLAYER_READY = 0;
   const PLAYER_PLAYING = 1;
   const PLAYER_DONE = 2;

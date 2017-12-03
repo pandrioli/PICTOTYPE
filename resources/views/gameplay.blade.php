@@ -30,7 +30,7 @@
       @if ($game->practique)
         <a class="game-panel game-cancel" href="/">              
       @else
-        <a class="game-panel game-cancel" href="/cancelgame/{{$game->id}}/{{$user_id}}">
+        <a class="game-panel game-cancel" href="/game/cancel/{{$game->id}}/{{$user_id}}">
       @endif
         X
       </a>

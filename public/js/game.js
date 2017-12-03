@@ -210,7 +210,7 @@ function win_game() {
 
 function finish_game() {
     var method = "post";
-    var path = "/finishgame";
+    var path = "/game/finish";
     var params = {game_id: game_id, user_id: user_id, time: game_mode==0 ? time : 0, points: game_mode==1 ? score : 0};
     var form = document.createElement("form");
     form.setAttribute("method", method);

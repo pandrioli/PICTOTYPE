@@ -2,8 +2,8 @@
 @section('title', 'PICTOTYPE')
 @section('script', asset('js/friends.js'))
 @php
-  //$users = $user->friends;
-  $users = \App\User::all();
+  $users = $user->friendsAccepted;
+  //$users = \App\User::all();
 @endphp
 @section('content')
   <div id="user-id" hidden>{{ $user->id }}</div>
@@ -22,7 +22,7 @@
       <div class="panel switch-container back-color-1">
         <div class="switch-panel">
           <div class="item-list" id="friend-list-container">
-              @include('user_items')
+              @include('includes/user_items')
           </div>
         </div>
         <div class="switch-panel">

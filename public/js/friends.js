@@ -66,7 +66,7 @@ function searchUsers() {
     if (searchInput.value.length > 3) {
       var ajax = new XMLHttpRequest();
       ajax.onload = updateUserResults;
-      ajax.open("GET", "/searchusers/" + searchInput.value);
+      ajax.open("GET", "/user/search/" + searchInput.value);
       ajax.send();
     } else userListContainer.innerHTML = "";
   }

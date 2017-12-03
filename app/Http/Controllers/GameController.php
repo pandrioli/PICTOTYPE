@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Game;
 use App\Phrase;
 use App\Word;
+use App\User;
 use App\CustomClasses\NotificationManager;
 
 class GameController extends Controller
@@ -26,8 +27,8 @@ class GameController extends Controller
       $this->words = $words;
     }
 
-    public function newGame() {
-      return view('new_game');
+    public function publicGame() {
+      return view('public_game');
     }
 
     public function joinPublicGame($mode) {
@@ -38,21 +39,42 @@ class GameController extends Controller
       $game = Game::find($public_game->id);
       $this->addPlayer($game->id, Auth::user());
       if ($game) return redirect()->route('gameplay', $game->id);
-      else return redirect()->route('newgame');
+      else return redirect()->route('publicgame');
     }
 
-    public function createGameForm($pract) {
-      $practique = $pract == "practique" ? true : false;
-      return view('create_game', compact('practique'));
+    public function acceptGame($game_id, $user_id) {
+      $this->addPlayer($game_id, Auth::user());
+      $this->notifyman->notifyGameAccepted($game_id, $user_id);
+      return redirect()->route('gameplay', $game_id);
+    }
+
+    public function createGameForm($data) {
+      $practique = $data == "practique" ? true : false;
+      $user_id = $data == "public" ? 0 : $data;
+      return view('create_game', compact('practique', 'user_id'));
     }
 
     public function createGame(Request $request) {
+      $owner = Auth::user();
       $mode = $request->input('mode');
       $practique = $request->input('practique');
+      $user_id = intval($request->input('user_id'));
       $time_per_letter = $request->input('time-per-letter');
       $play_now = $practique || $request->input('play_now');
       $game = $this->generateGame($mode, $time_per_letter, $practique);
-      if (!$practique) $this->addPlayer($game->id, Auth::user());
+      if (!$practique) $this->addPlayer($game->id, $owner);
+      if ($user_id) {
+        $user = User::find($user_id);
+        if ($owner->friendship($user_id) == User::FRIENDSHIP_ACCEPTED) {
+          $this->addPlayer($game->id, $user);
+          $this->notifyman->notifyGameCreated($game->id, $user->id);
+        } else {
+          $this->notifyman->notifyGameInvitation($game->id, $user->id);
+          $game->state = Game::STATE_INVITATION;
+          $game->invitation_id = $user->id;
+          $game->save();
+        }
+      }
       if ($play_now) return redirect()->route('gameplay', $game->id);
       else return redirect()->route('home');
     }
@@ -60,7 +82,7 @@ class GameController extends Controller
     public function viewGame($id) {
       $game = Game::find($id);
       $user = $game->currentPlayer();
-      if ($user) return view('view_game', compact('game'));
+      if ($user || $game->invitation_id == Auth::user()->id) return view('view_game', compact('game'));
       else return redirect()->route('home');
     }
 
