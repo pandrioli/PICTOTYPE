@@ -74,7 +74,7 @@
       <div class="button-container">
         <div class="panel-footer back-color-1">NUEVA PARTIDA</div>
         <a class="button back-color-2" href="/user/friends">PRIVADA</a>
-        <a class="button back-color-2" href="/game/new">PUBLICA</a>
+        <a class="button back-color-2" href="/game/public">PUBLICA</a>
       </div>
     </div>
   </div>
