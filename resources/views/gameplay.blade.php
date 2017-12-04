@@ -28,7 +28,7 @@
       <div class="game-panel game-timer" id="timer">
       </div>
       @if ($game->practique)
-        <a class="game-panel game-cancel" href="/">              
+        <a class="game-panel game-cancel" href="/">
       @else
         <a class="game-panel game-cancel" href="/game/cancel/{{$game->id}}/{{$user_id}}">
       @endif
@@ -44,6 +44,10 @@
       </div>
       <div class="game-popup" id="game-popup"></div>
       <div class="game-popup" id="letter-timer"></div>
+      <div id="tutorial-container">
+        <article id="tutorial-message"></article>
+        <button id="ok-button">OK</button>
+      </div>
     </section>
     </div></div>
   </body>

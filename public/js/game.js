@@ -12,7 +12,10 @@ var images;
 var letter_timer;
 var letter_time = 10;
 var score;
- 
+
+var tutorial;
+var tutorial_container;
+var tutorial_message;
 function start() {
   game_id = document.getElementById("game-id").innerHTML;
   user_id = document.getElementById("user-id").innerHTML;
@@ -20,6 +23,10 @@ function start() {
   image_count = parseInt(document.getElementById("image-count").innerHTML);
   letter_time = parseInt(document.getElementById("time-per-letter").innerHTML);
   phrase = document.getElementById("phrase-text").innerHTML;
+
+  tutorial_container = document.getElementById('tutorial-container');
+  tutorial_message = document.getElementById('tutorial-message');
+  document.getElementById('ok-button').onclick = hide_tutorial;
 
   //boton para terminar la partida - developer mode
   var cheatbutton = document.createElement('button');
@@ -30,6 +37,10 @@ function start() {
   document.body.appendChild(cheatbutton);
   //phrase = "A";
 
+  if (game_mode == 3) {
+    tutorial = true;
+    game_mode = 0;
+  }
 
   letter_timer = document.getElementById("letter-timer");
   score = 0;
@@ -45,7 +56,13 @@ function start() {
   document.getElementById("game-container").hidden = false;
   document.getElementById("game-loader").hidden = true;
   refresh_phrase();
-  show_popup("¡EMPIEZA!", "white", false);
+
+  //tutorial = true;
+
+  if (tutorial) {
+    show_tutorial(0);
+    show_images_help();
+  } else show_popup("¡EMPIEZA!", "white", false);
 }
 
 function set_letter_timer() {
@@ -56,6 +73,8 @@ function set_letter_timer() {
 
 function letter_advance() {
   current_letter++;
+  if (tutorial && current_letter == 5) show_tutorial(1);
+  if (tutorial && current_letter == 11) show_tutorial(2);
   if (get_current_letter() == " ") current_letter++;
   if (current_letter == phrase.length) win_game();
   refresh_phrase();
@@ -73,7 +92,7 @@ function image_click(image) {
     parent_div.style.backgroundColor = "red";
   }
   TweenLite.to(image, .3, {opacity: .3, ease: Power3.easeOut, onComplete: function() {
-    TweenLite.to(image, .1, {opacity: 1, ease: Power3.easeOut, onComplete: shuffle_images()});
+    TweenLite.to(image, .1, {opacity: tutorial ? .5 : 1, ease: Power3.easeOut, onComplete: shuffle_images()});
   }});
 }
 
@@ -137,7 +156,7 @@ function shuffle_images() {
   images.forEach(function(image) {
     container.appendChild(image);
   });
-
+  if (tutorial) show_images_help();
 }
 
 function shuffle(a) {
@@ -230,4 +249,43 @@ function finish_game() {
 
 function cancel_game() {
   location.reload();
+}
+
+
+function show_images_help() {
+  letter = get_current_letter();
+  for (var i in images) {
+    images[i].children.item(0).style.zIndex = "-1";
+    images[i].children.item(0).style.opacity = ".5";
+    images[i].children.item(1).style.opacity = "0";
+    images[i].style.backgroundColor = "transparent";
+    images[i].children.item(1).style.pointerEvents = "none";
+    word = images[i].children.item(1).innerHTML;
+    if (word.search(letter) > -1) {
+      images[i].children.item(1).style.color = "black";
+      images[i].children.item(1).style.opacity = "1";
+      images[i].children.item(1).style.zIndex = "0";
+      images[i].style.backgroundColor = "rgba(255,255,255,.8)";
+    }
+  }
+}
+
+function show_tutorial(i) {
+  var messages = [
+    'EL OBJETIVO DEL JUEGO ES ESCRIBIR LA FRASE INDICADA EN LA PARTE SUPERIOR, LETRA POR LETRA, UTILIZANDO LAS IMAGENES QUE REPRESENTAN UNA PALABRA QUE CONTENGA LA LETRA SOLICITADA (LA QUE TITILA) EN ALGUN LUGAR DE LA MISMA. POR EJEMPLO, UNA IMAGEN DE UN OSO, SIRVE PARA ESCRIBIR TANTO LA "O" COMO LA "S". PARA AYUDARTE, LAS OPCIONES CORRECTAS VAN A ESTAR RESALTADAS Y LAS PALABRAS VAN A ESTAR VISIBLES.',
+    'EN EL MODO POR TIEMPO, SIMPLEMENTE TENES QUE LOGRAR TERMINAR LA FRASE EN EL MENOR TIEMPO POSIBLE, NO IMPORTA EN QUE LUGAR DE LA PALABRA ESTE LA LETRA SOLICITADA. EN EL MODO POR PUNTOS, EN CAMBIO, TIENES UN TIEMPO LIMITADO PARA CADA LETRA Y EL PUNTAJE POR LETRA ES DE 10 PUNTOS SI LA LETRA SOLICITADA ESTA EN EL MEDIO DE LA PALABRA, 20 PUNTOS SI EMPIEZA CON LA LETRA, Y 35 PUNTOS SI TERMINA CON LA LETRA. SI ELIGES UNA IMAGEN INCORRECTA, SE TE RESTAN 5 PUNTOS.',
+    'PUEDES CREAR PARTIDAS PUBLICAS PARA QUE CUALQUIER USUARIO PUEDA UNIRSE A ELLAS, O BIEN UNIRTE A UNA PARTIDA YA CREADA. PARA LAS PARTIDAS PRIVADAS, PUEDES BUSCAR USUARIOS Y ENVIARLES UNA INVITACION, O BIEN AGREGAR AUTOMATICAMENTE A QUIENES TE HAYAN ACEPTADO COMO AMIGO.',
+    'ESTE ES EL FIN DEL TUTORIAL ¡ESPERAMOS QUE TE DIVIERTAS!'
+  ];
+  tutorial_message.innerHTML = messages[i];
+  tutorial_container.style.pointerEvents = "all";
+  TweenLite.to(tutorial_container, 1, {opacity: 1});
+  if (i == 1) game_mode = 1;
+  if (i == 2) document.getElementById('ok-button').onclick = function() {show_tutorial(3);};
+  if (i == 3) document.getElementById('ok-button').onclick = function() {window.location = "/";};
+}
+
+function hide_tutorial() {
+  tutorial_container.style.pointerEvents = "none";
+  TweenLite.to(tutorial_container, 1, {opacity: 0});
 }
