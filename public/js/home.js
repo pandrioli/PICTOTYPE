@@ -6,6 +6,7 @@ var current_image;
 var current_word;
 var current_letter;
 var index;
+var image_file;
 
 function main() {
   image[0] = document.getElementById('image-0');
@@ -17,27 +18,19 @@ function main() {
   current_letter = 0;
   current_word = ""
   setTimeout(function() {
-    load_image(0);
-    TweenLite.to(image[0], 1, {opacity: 1});
-    word_timer = setInterval(show_word, 200);
-    timer = setInterval(switch_image, 5000);
+    switch_image(0);
   }, 1000);
 }
 
-function switch_image() {
-  if (current_image == 0) {
-    TweenLite.to(image[0], 2, {opacity: 0});
-    current_image = 1;
-    load_image(1);
-  } else {
-    TweenLite.to(image[1], 2, {opacity: 0});
-    current_image = 0;
-    load_image(0);
-  }
+function image_timer() {
+  var other_image = current_image == 0 ? 1 : 0;
+  TweenLite.to(image[other_image], 2, {opacity: 0});
   TweenLite.to(image[current_image], 2, {opacity: 1});
   clearInterval(word_timer);
+  current_word = image_file.substring(0, image_file.length-4).toUpperCase().replace(/_/g,"Ñ");
   current_letter = 0;
   word_timer = setInterval(show_word, 200);
+  setTimeout(switch_image, 5000);
 }
 
 function show_word() {
@@ -45,11 +38,12 @@ function show_word() {
   document.getElementById('image-word').innerHTML = current_word.substring(0,current_letter);
 }
 
-function load_image(n) {
+function switch_image(n) {
+  current_image = current_image == 0 ? 1 : 0;
   index++;
   if (index==filenames.length) index=0;
-  var new_file = filenames[index];
-  full_path = image_path+"/pictotypes/"+new_file;
-  image[n].src = full_path;
-  current_word = new_file.substring(0, new_file.length-4).toUpperCase().replace(/_/g,"Ñ");
+  image_file = filenames[index];
+  full_path = image_path+"/pictotypes/"+image_file;
+  image[current_image].src = full_path;
+  image[current_image].onload = image_timer;
 }

@@ -1,7 +1,7 @@
 @extends('base_site')
 
 @section('title', 'PICTOTYPE')
-@section('script', asset('js/home.js'))
+@section('script', asset('js/home.js?100'))
 @section('header-button', 'home')
 
 @section('content')
