@@ -91,7 +91,7 @@
         </div>
       @endif
       <div class="button-container">
-        @if ($game->state == Game::STATE_INVITATION)
+        @if ($game->state == Game::STATE_INVITATION && $opponent)
           <a class="button form-button back-color-2" href="/game/reject/{{ $game->id }}/{{ $opponent->id }}">RECHAZAR</a>
           <a class="button form-button back-color-1" href="/game/accept/{{ $game->id }}/{{ $opponent->id }}">ACEPTAR</a>
         @else
@@ -99,7 +99,7 @@
           @if ($opponent)
             <a class="button form-button back-color-2" href="/user/view/{{ $opponent->id }}/game-{{ $game->id }}">VER OPONENTE</a>
           @endif
-          @if ($player_state != GAME::PLAYER_DONE)
+          @if ($player_state != Game::PLAYER_DONE && $game->state != Game::STATE_CANCELLED)
             <a class="button form-button back-color-1" href="/game/play/{{ $game->id }}">
               @if ($tied)
                 DESEMPATAR

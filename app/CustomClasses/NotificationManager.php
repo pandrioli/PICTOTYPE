@@ -9,7 +9,7 @@ use App\Notification;
 class NotificationManager {
 
   public function notifyGameCreated($game_id, $user_id) {
-    $message = "<span>".Auth::user()->username."</span> CREO UNA PARTIDA CON VOS";
+    $message = "<span>".Auth::user()->username."</span> TE AGREGO A UNA PARTIDA";
     $this->notifyGame($game_id, $user_id, $message, true);
   }
   public function notifyGameInvitation($game_id, $user_id) {

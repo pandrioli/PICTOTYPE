@@ -33,24 +33,18 @@ function switchPanel(index) {
   else if (getCookie('reading')) notifAllRead();
 }
 
-function notifRead(index) {
-  var notif = container_notif.children.item(index);
+function notifRead(notif) {
   notif.firstElementChild.innerHTML = "1";
   updateNotifAlert();
-  var ajax = new XMLHttpRequest();
-  ajax.open('GET', '/api/notifications/setread/' + notif.children.item(1).innerHTML);
-  ajax.send();
+  ajaxCall('/api/notifications/setread/' + notif.children.item(1).innerHTML, function() {});
 }
 
 function notifAllRead() {
   setCookie('reading', '');
-  var ajax = new XMLHttpRequest();
-  ajax.onload = function() {
-    container_notif.innerHTML = this.responseText;
+  ajaxCall('/api/notifications/setallreadandget', function(notifications) {
+    container_notif.innerHTML = notifications.html;
     updateNotifAlert();
-  }
-  ajax.open('GET', '/api/notifications/setallreadandget');
-  ajax.send();
+  });
 }
 
 
@@ -75,20 +69,11 @@ function updateNotifAlert() {
 
 
 function getUpdates() {
-  var ajax_games = new XMLHttpRequest();
-  ajax_games.onload = updateGames;
-  var url = "/api/games/updated/"+timestamp;
-  ajax_games.open("GET",url);
-  ajax_games.send();
-  var ajax_notif = new XMLHttpRequest();
-  ajax_notif.onload = updateNotif;
-  url = "/api/notifications/new/"+timestamp;
-  ajax_notif.open("GET",url);
-  ajax_notif.send();
+  ajaxCall('/api/games/updated/'+timestamp, updateGames);
+  ajaxCall('/api/notifications/new/'+timestamp, updateNotif);
 }
 
-function updateNotif() {
-  var notif = JSON.parse(this.responseText);
+function updateNotif(notif) {
   if (notif.html) {
     timestamp = notif.timestamp;
     container_notif.innerHTML = notif.html + container_notif.innerHTML;
@@ -96,8 +81,7 @@ function updateNotif() {
   }
 }
 
-function updateGames() {
-  var games = JSON.parse(this.responseText);
+function updateGames(games) {
   if (games.length>0) {
     timestamp = games[0].updated_at;
     games.forEach(updateHTML);
@@ -105,8 +89,8 @@ function updateGames() {
 }
 
 function updateHTML(game) {
-  console.log(1);
   var gameDIV = document.getElementById('game-'+game.id);
+  if (!gameDIV) return;
   var opponentDIV = gameDIV.querySelector(".game-item-opponent");
   var avatarDIV = gameDIV.querySelector(".game-item-avatar");
   var resultDIV = gameDIV.querySelector(".game-item-result");

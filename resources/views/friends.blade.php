@@ -22,7 +22,13 @@
       <div class="panel switch-container back-color-1">
         <div class="switch-panel">
           <div class="item-list" id="friend-list-container">
+            @if ($users->count() > 0)
               @include('includes/user_items')
+            @else
+              <div style="margin-top: 50px; text-align: center;">
+                NO TIENES AMIGOS AUN
+              </div>
+            @endif
           </div>
         </div>
         <div class="switch-panel">

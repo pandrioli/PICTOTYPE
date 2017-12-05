@@ -33,6 +33,7 @@ function mainFriends() {
   searchInput.oninput = startAutosearch;
   tab = getCookie('active-user-tab');
   if (tab == "") tab = 0;
+  if (tab == 0)   setCookie('user-search-text', '');
   switchPanel(tab);
   document.querySelectorAll("input[type='radio']")[tab].checked=true;
   if (tab == 1) searchInput.value = getCookie('user-search-text');
@@ -48,7 +49,7 @@ function startAutosearch() {
 function searchUsers() {
   if (tab == 0) {
     setCookie('friend-search-text', searchInput.value);
-    var userList = friendListContainer.children;
+    var userList = friendListContainer.querySelectorAll(".user-item");
     for (var i=0; i<userList.length; i++) {
       var user = userList.item(i);
       var username = user.querySelector('.user-item-username').innerHTML.toUpperCase();

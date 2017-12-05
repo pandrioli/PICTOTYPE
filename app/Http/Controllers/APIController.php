@@ -47,7 +47,7 @@ class APIController extends Controller
     $notification = Notification::find($id);
     $notification->read = 1;
     $notification->save();
-    return "";
+    return "{}";
   }
 
   public function notificationsAllRead() {
@@ -57,6 +57,11 @@ class APIController extends Controller
       $notification->save();
     }
     $notifications = Auth::user()->notifications;
-    return view('includes/notification_items', compact('notifications'));
+    if ($notifications->count() > 0) {
+      $html = view('includes/notification_items',compact('notifications'));
+      return json_encode(['timestamp' => $notifications->values()->first()->created_at->format('Y-m-d H:i:s'), 'html' => (string)$html]);
+    } else {
+      return "{'timestamp' => '','html' => ''}";
+    }
   }
 }

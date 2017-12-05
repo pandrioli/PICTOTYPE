@@ -55,6 +55,15 @@ class GameController extends Controller
       return redirect()->route('gameplay', $game_id);
     }
 
+    public function rejectGame($game_id) {
+      $game = Game::find($game_id);
+      $game->state = Game::STATE_CANCELLED;
+      $game->setOpponentState(Game::PLAYER_DONE);
+      $game->save();
+      $this->notifyman->notifyGameRejected($game_id, $game->opponentPlayer()->id);
+      return redirect()->route('home');
+    }
+
     public function createGameForm($data) {
       $practique = $data == "practique" ? true : false;
       $user_id = $data == "public" ? 0 : $data;

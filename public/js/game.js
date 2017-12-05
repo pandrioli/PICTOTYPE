@@ -12,11 +12,13 @@ var images;
 var letter_timer;
 var letter_time = 10;
 var score;
+var tuto_counter;
 
 var tutorial;
 var tutorial_container;
 var tutorial_message;
 function start() {
+  tuto_counter = 0;
   game_id = document.getElementById("game-id").innerHTML;
   user_id = document.getElementById("user-id").innerHTML;
   game_mode = parseInt(document.getElementById("game-mode").innerHTML);
@@ -73,9 +75,11 @@ function set_letter_timer() {
 }
 
 function letter_advance() {
+  tuto_counter++;
   current_letter++;
-  if (tutorial && current_letter == 5) show_tutorial(1);
-  if (tutorial && current_letter == 11) show_tutorial(2);
+  if (tutorial && tuto_counter == 4) show_tutorial(1);
+  if (tutorial && tuto_counter == 6) show_tutorial(2);
+  if (tutorial && tuto_counter == 11) show_tutorial(3);
   if (get_current_letter() == " ") current_letter++;
   if (current_letter == phrase.length) win_game();
   refresh_phrase();
@@ -273,17 +277,18 @@ function show_images_help() {
 
 function show_tutorial(i) {
   var messages = [
-    'EL OBJETIVO DEL JUEGO ES ESCRIBIR LA FRASE INDICADA EN LA PARTE SUPERIOR, LETRA POR LETRA, UTILIZANDO LAS IMAGENES. LA PALABRA QUE REPRESENTA LA IMAGEN DEBE CONTENER LA LETRA SOLICITADA (LA QUE TITILA) EN ALGUN LUGAR DE LA MISMA. POR EJEMPLO, UNA IMAGEN DE UN OSO, SIRVE PARA ESCRIBIR TANTO LA "O" COMO LA "S". PARA AYUDARTE, LAS OPCIONES CORRECTAS VAN A ESTAR RESALTADAS Y LAS PALABRAS VAN A ESTAR VISIBLES.',
-    'EN EL MODO POR TIEMPO, SIMPLEMENTE TENES QUE LOGRAR TERMINAR LA FRASE EN EL MENOR TIEMPO POSIBLE, NO IMPORTA EN QUE LUGAR DE LA PALABRA ESTE LA LETRA SOLICITADA. EN EL MODO POR PUNTOS, EN CAMBIO, TIENES UN TIEMPO LIMITADO PARA CADA LETRA Y EL PUNTAJE POR LETRA ES DE 10 PUNTOS SI LA LETRA SOLICITADA ESTA EN EL MEDIO DE LA PALABRA, 20 PUNTOS SI EMPIEZA CON LA LETRA, Y 35 PUNTOS SI TERMINA CON LA LETRA. SI ELIGES UNA IMAGEN INCORRECTA, SE TE RESTAN 5 PUNTOS.',
+    '<h1>¡BIENVENIDO A PICTOTYPE!</h1>EL OBJETIVO DEL JUEGO ES ESCRIBIR LA FRASE INDICADA EN LA PARTE SUPERIOR, LETRA POR LETRA, UTILIZANDO LAS IMAGENES. LA PALABRA QUE REPRESENTA LA IMAGEN DEBE CONTENER LA LETRA SOLICITADA (LA QUE TITILA) EN ALGUN LUGAR DE LA MISMA. POR EJEMPLO, UNA IMAGEN DE UN OSO, SIRVE PARA ESCRIBIR TANTO LA "O" COMO LA "S". PARA AYUDARTE A ENTENDER EL FUNCIONAMIENTO, LAS OPCIONES CORRECTAS VAN A ESTAR RESALTADAS Y LAS PALABRAS VAN A ESTAR VISIBLES.',
+    'LA PALABRA ASOCIADA A LA IMAGEN, ES SIEMPRE LA QUE LA REPRESENTA EN FORMA MAS ESPECIFICA Y NO DE MANERA GENERAL. POR EJEMPLO, LA IMAGEN DE UN PERRO, REPRESENTA A "PERRO" Y NO A "ANIMAL" O "MASCOTA". AL PULSAR SOBRE LA IMAGEN, YA SEA QUE ACERTASTE O NO, SE MOSTRARA BREVEMENTE LA PALABRA ASOCIADA.',
+    'EN EL MODO POR TIEMPO, SIMPLEMENTE TENES QUE LOGRAR TERMINAR LA FRASE EN EL MENOR TIEMPO POSIBLE, NO IMPORTA EN QUE LUGAR DE LA PALABRA ESTE LA LETRA SOLICITADA ¡SI TE EQUIVOCAS VUELVES AL PRINCIPIO! EN EL MODO POR PUNTOS, EN CAMBIO, TENES UN TIEMPO LIMITADO PARA CADA LETRA Y EL PUNTAJE POR LETRA ES DE 10 PUNTOS SI LA LETRA SOLICITADA ESTA EN EL MEDIO DE LA PALABRA, 20 PUNTOS SI EMPIEZA CON LA LETRA, Y 35 PUNTOS SI TERMINA CON LA LETRA. SI ELIGES UNA IMAGEN INCORRECTA, SE TE RESTAN 5 PUNTOS.',
     'PUEDES CREAR PARTIDAS PUBLICAS PARA QUE CUALQUIER USUARIO PUEDA UNIRSE A ELLAS, O BIEN UNIRTE A UNA PARTIDA YA CREADA. PARA LAS PARTIDAS PRIVADAS, PUEDES BUSCAR USUARIOS Y ENVIARLES UNA INVITACION, O BIEN AGREGAR AUTOMATICAMENTE A QUIENES TE HAYAN ACEPTADO COMO AMIGO.',
-    'ESTE ES EL FIN DEL TUTORIAL ¡ESPERAMOS QUE TE DIVIERTAS!'
+    'ESTE ES EL FIN DEL TUTORIAL <H1>¡ESPERAMOS QUE TE DIVIERTAS!</H1>'
   ];
   tutorial_message.innerHTML = messages[i];
   tutorial_container.style.pointerEvents = "all";
   TweenLite.to(tutorial_container, 1, {opacity: 1});
-  if (i == 1) game_mode = 1;
-  if (i == 2) document.getElementById('ok-button').onclick = function() {show_tutorial(3);};
-  if (i == 3) document.getElementById('ok-button').onclick = function() {window.location = "/";};
+  if (i == 2) game_mode = 1;
+  if (i == 3) document.getElementById('ok-button').onclick = function() {show_tutorial(4);};
+  if (i == 4) document.getElementById('ok-button').onclick = function() {window.location = "/";};
 }
 
 function hide_tutorial() {

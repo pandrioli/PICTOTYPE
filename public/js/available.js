@@ -6,19 +6,10 @@ var ajax;
 function startAvailableTimer() {
   mode0 = document.getElementById('mode0-available');
   mode1 = document.getElementById('mode1-available');
-  ajax = new XMLHttpRequest();
-  ajax.onload = updateAvailable;
-  queryAvailable();
-  setInterval(queryAvailable, 1000);
+  setInterval(ajaxCall('/api/games/availablepublic', updateAvailable), 1000);
 }
 
-function queryAvailable() {
-  ajax.open("GET", "/api/games/availablepublic", true);
-  ajax.send();
-}
-
-function updateAvailable() {
-  var available = JSON.parse(this.responseText);
+function updateAvailable(available) {
   if (available.tiempo > 0) {
     mode0.innerHTML = "PARTIDAS DISPONIBLES: " + available.tiempo;
     enableAnchor(mode0.parentElement);

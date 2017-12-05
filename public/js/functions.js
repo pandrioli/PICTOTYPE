@@ -19,3 +19,14 @@ function getCookie(cname) {
     }
     return "";
 }
+
+function ajaxCall(url, callback) {
+  var ajax=new XMLHttpRequest();
+  ajax.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      callback(JSON.parse(this.responseText));
+    }
+  };
+  ajax.open("GET", url, true);
+  ajax.send();
+}

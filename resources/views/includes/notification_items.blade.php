@@ -15,7 +15,7 @@
   <{{ $notification->clickeable ? 'a': 'div' }}
     class='notification-item {{ $notification->read? '':'notification-new'}}'
     href="{{ $href }}"
-    onclick="notifRead({{$key}})"
+    onclick="notifRead(this)"
   >
     <div hidden>{{ $notification->read}}</div>
     <div hidden>{{ $notification->id}}</div>
