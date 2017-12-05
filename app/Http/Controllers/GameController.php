@@ -27,6 +27,13 @@ class GameController extends Controller
       $this->words = $words;
     }
 
+
+    public function tutorial() {
+      $game = $this->generateGame(3, 20, false);
+      $user_id = 0;
+      return view('gameplay', compact('game','user_id'));
+    }
+
     public function publicGame() {
       return view('public_game');
     }

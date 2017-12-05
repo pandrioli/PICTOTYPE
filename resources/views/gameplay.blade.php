@@ -27,7 +27,7 @@
       </div>
       <div class="game-panel game-timer" id="timer">
       </div>
-      @if ($game->practique)
+      @if ($game->practique || $game->mode == 3)
         <a class="game-panel game-cancel" href="/">
       @else
         <a class="game-panel game-cancel" href="/game/cancel/{{$game->id}}/{{$user_id}}">

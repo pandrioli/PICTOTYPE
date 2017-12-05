@@ -11,12 +11,15 @@
 |
 */
 
+Route::get ('/ajax', function() {return view('ajax');});
+
 Route::auth();
 Route::get ('/', 'HomeController@home')->name('home');
 Route::get ('/profile', 'UserController@profile')->name('profile')->middleware('auth');
 Route::post('/profile', 'UserController@update')->middleware('auth');
 Route::get ('/changetheme', 'UserController@changeTheme');
 
+Route::get ('/game/tutorial', 'GameController@tutorial');
 Route::get ('/game/public', 'GameController@publicGame')->name('publicgame')->middleware('auth');
 Route::get ('/game/joinpublic/{mode}', 'GameController@joinPublicGame')->middleware('auth');
 Route::get ('/game/create/{data}', 'GameController@createGameForm');

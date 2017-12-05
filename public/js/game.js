@@ -60,6 +60,7 @@ function start() {
   //tutorial = true;
 
   if (tutorial) {
+    document.getElementById('timer').innerHTML = "TUTORIAL";
     show_tutorial(0);
     show_images_help();
   } else show_popup("¡EMPIEZA!", "white", false);
@@ -177,7 +178,7 @@ function refresh_phrase() {
   else document.getElementById("current-letter").innerHTML = "";
   document.getElementById("done-text").innerHTML = done;
   document.getElementById("remaining-text").innerHTML = remaining;
-  if (game_mode == 1) document.getElementById("timer").innerHTML = score + " pts";
+  if (game_mode == 1 && !tutorial) document.getElementById("timer").innerHTML = score + " pts";
 }
 
 function refresh_time_1() {
@@ -191,7 +192,7 @@ function refresh_time_1() {
   minutes = Math.floor(floor_seconds/60);
   if (decimals<10) zero_decimals = "0";
   if (seconds<10) zero_seconds = "0";
-  document.getElementById("timer").innerHTML = minutes + ":" + zero_seconds + seconds + "." + zero_decimals + decimals;
+  if (!tutorial) document.getElementById("timer").innerHTML = minutes + ":" + zero_seconds + seconds + "." + zero_decimals + decimals;
   //document.getElementById("timer").innerHTML = floor_seconds;
 }
 
@@ -272,7 +273,7 @@ function show_images_help() {
 
 function show_tutorial(i) {
   var messages = [
-    'EL OBJETIVO DEL JUEGO ES ESCRIBIR LA FRASE INDICADA EN LA PARTE SUPERIOR, LETRA POR LETRA, UTILIZANDO LAS IMAGENES QUE REPRESENTAN UNA PALABRA QUE CONTENGA LA LETRA SOLICITADA (LA QUE TITILA) EN ALGUN LUGAR DE LA MISMA. POR EJEMPLO, UNA IMAGEN DE UN OSO, SIRVE PARA ESCRIBIR TANTO LA "O" COMO LA "S". PARA AYUDARTE, LAS OPCIONES CORRECTAS VAN A ESTAR RESALTADAS Y LAS PALABRAS VAN A ESTAR VISIBLES.',
+    'EL OBJETIVO DEL JUEGO ES ESCRIBIR LA FRASE INDICADA EN LA PARTE SUPERIOR, LETRA POR LETRA, UTILIZANDO LAS IMAGENES. LA PALABRA QUE REPRESENTA LA IMAGEN DEBE CONTENER LA LETRA SOLICITADA (LA QUE TITILA) EN ALGUN LUGAR DE LA MISMA. POR EJEMPLO, UNA IMAGEN DE UN OSO, SIRVE PARA ESCRIBIR TANTO LA "O" COMO LA "S". PARA AYUDARTE, LAS OPCIONES CORRECTAS VAN A ESTAR RESALTADAS Y LAS PALABRAS VAN A ESTAR VISIBLES.',
     'EN EL MODO POR TIEMPO, SIMPLEMENTE TENES QUE LOGRAR TERMINAR LA FRASE EN EL MENOR TIEMPO POSIBLE, NO IMPORTA EN QUE LUGAR DE LA PALABRA ESTE LA LETRA SOLICITADA. EN EL MODO POR PUNTOS, EN CAMBIO, TIENES UN TIEMPO LIMITADO PARA CADA LETRA Y EL PUNTAJE POR LETRA ES DE 10 PUNTOS SI LA LETRA SOLICITADA ESTA EN EL MEDIO DE LA PALABRA, 20 PUNTOS SI EMPIEZA CON LA LETRA, Y 35 PUNTOS SI TERMINA CON LA LETRA. SI ELIGES UNA IMAGEN INCORRECTA, SE TE RESTAN 5 PUNTOS.',
     'PUEDES CREAR PARTIDAS PUBLICAS PARA QUE CUALQUIER USUARIO PUEDA UNIRSE A ELLAS, O BIEN UNIRTE A UNA PARTIDA YA CREADA. PARA LAS PARTIDAS PRIVADAS, PUEDES BUSCAR USUARIOS Y ENVIARLES UNA INVITACION, O BIEN AGREGAR AUTOMATICAMENTE A QUIENES TE HAYAN ACEPTADO COMO AMIGO.',
     'ESTE ES EL FIN DEL TUTORIAL ¡ESPERAMOS QUE TE DIVIERTAS!'
