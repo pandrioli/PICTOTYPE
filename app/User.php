@@ -36,7 +36,7 @@ class User extends Authenticatable
     }
 
     public function stats() {
-      return $this->hasOne(UserStat::class);
+      return $this->hasOne(UsersStat::class);
     }
 
     public function games() {

@@ -27,7 +27,7 @@ class Game extends Model
     return $this->hasMany(Word::class);
   }
   public function players() {
-    return $this->belongsToMany(User::class, 'games_users')->withPivot('state', 'time', 'points');
+    return $this->belongsToMany(User::class, 'games_users')->withPivot('state', 'time', 'points', 'letter_average');
   }
   public function currentPlayer() {
     return $this->players()->find(Auth::user()->id);
@@ -48,6 +48,9 @@ class Game extends Model
   public function setPlayerPoints($points) {
     $this->players()->updateExistingPivot(Auth::user()->id, ['points' => $points]);
   }
+  public function setPlayerAverage($average) {
+    $this->players()->updateExistingPivot(Auth::user()->id, ['letter_average' => $average]);
+  }
 
 
   public function getPlayerState() {
@@ -59,6 +62,9 @@ class Game extends Model
   public function getPlayerPoints() {
     return $this->currentPlayer()->pivot->points;
   }
+  public function getPlayerAverage() {
+    return $this->currentPlayer()->pivot->letter_average;
+  }
 
   public function getOpponentState() {
     return $this->opponentPlayer()->pivot->state;
@@ -69,6 +75,11 @@ class Game extends Model
   public function getOpponentPoints() {
     return $this->opponentPlayer()->pivot->points;
   }
+  public function getOpponentAverage() {
+    return $this->opponentPlayer()->pivot->letter_average;
+  }
+
+
 
   public function win() {
     return $this->state == Game::STATE_FINISHED && $this->winner_id == $this->currentPlayer()->id;

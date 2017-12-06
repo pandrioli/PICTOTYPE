@@ -11,6 +11,7 @@ use App\Game;
 use App\Phrase;
 use App\Word;
 use App\User;
+use App\UsersStat;
 use App\CustomClasses\NotificationManager;
 
 class GameController extends Controller
@@ -125,6 +126,7 @@ class GameController extends Controller
       $game->setPlayerState(Game::PLAYER_DONE);
       $game->setPlayerTime($request->input('time'));
       $game->setPlayerPoints($request->input('points'));
+      $game->setPlayerAverage($request->input('letter_average'));
       $opponent = $game->opponentPlayer();
       if ($opponent && $game->getOpponentState()==Game::PLAYER_DONE && $game->state != Game::STATE_CANCELLED) {
         $win = 0;
@@ -142,7 +144,10 @@ class GameController extends Controller
         if ($win == 2) {
           $game->winner_id = $game->opponentPlayer()->id;
         }
-        if ($win>0) $game->state = Game::STATE_FINISHED; //gano alguien
+        if ($win>0) {
+          $game->state = Game::STATE_FINISHED; //gano alguien
+          $this->saveStats($game); // guardar estadisticas
+        }
         else { // empate - volver a jugar - winner_id 0 indica empate
           $game->state = Game::STATE_WAITING_PLAYS;
           $game->setPlayerState(Game::PLAYER_READY);
@@ -176,6 +181,32 @@ class GameController extends Controller
         $game->state = Game::STATE_WAITING_PLAYS;
       }
       $game->save();
+    }
+
+    private function saveStats($game) {
+      foreach ($game->players as $user) {
+        if ($user->stats) {
+          $stats = $user->stats;
+        } else {
+          $stats = new UsersStat();
+          $stats->user_id = $user->id;
+          $stats->played = 0;
+          $stats->wins = 0;
+          $stats->losses = 0;
+          $stats->time_per_letter = 0;
+          $stats->points_per_letter = 0;
+        }
+        if ($game->mode == 0) {
+          $stats->time_per_letter = ($stats->time_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
+        }
+        if ($game->mode == 1) {
+          $stats->points_per_letter = ($stats->points_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
+        }
+        $stats->played++;
+        if ($game->winner_id == $user->id) $stats->wins++; else $stats->losses++;
+        $stats->wins_ratio = $stats->wins > 0 ? $stats->played / $stats->wins : 0;
+        $stats->save();
+      }
     }
 
     private function generateGame($mode, $time = 0, $practique = false) {

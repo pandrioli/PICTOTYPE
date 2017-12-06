@@ -11,7 +11,7 @@ var image_count;
 var images;
 var letter_timer;
 var letter_time = 10;
-var score;
+var points;
 var tuto_counter;
 
 var tutorial;
@@ -45,7 +45,7 @@ function start() {
   }
 
   letter_timer = document.getElementById("letter-timer");
-  score = 0;
+  points = 0;
   win = false;
   if (game_mode==0) {
     time = 0;
@@ -108,12 +108,12 @@ function check_word(word) {
     if (letter_pos>-1) return right_word(); else return wrong_word();
   }
   if (game_mode == 1) {
-    var score_obtained = 10;
-    if (letter_pos == 0) score_obtained = 20;
-    if (letter == word.substring(word.length-1)) score_obtained = 35;
-    if (letter_pos == -1) score_obtained = -5;
-    show_popup((score_obtained>0?"+":"")+score_obtained+" pts", score_obtained>0?"lightgreen":"pink", false);
-    score+=score_obtained;
+    var points_obtained = 10;
+    if (letter_pos == 0) points_obtained = 20;
+    if (letter == word.substring(word.length-1)) points_obtained = 35;
+    if (letter_pos == -1) points_obtained = -5;
+    show_popup((points_obtained>0?"+":"")+points_obtained+" pts", points_obtained>0?"lightgreen":"pink", false);
+    points+=points_obtained;
     letter_advance();
     return letter_pos>-1;
   }
@@ -182,7 +182,7 @@ function refresh_phrase() {
   else document.getElementById("current-letter").innerHTML = "";
   document.getElementById("done-text").innerHTML = done;
   document.getElementById("remaining-text").innerHTML = remaining;
-  if (game_mode == 1 && !tutorial) document.getElementById("timer").innerHTML = score + " pts";
+  if (game_mode == 1 && !tutorial) document.getElementById("timer").innerHTML = points + " pts";
 }
 
 function refresh_time_1() {
@@ -235,7 +235,12 @@ function win_game() {
 function finish_game() {
     var method = "post";
     var path = "/game/finish";
-    var params = {game_id: game_id, user_id: user_id, time: game_mode==0 ? time : 0, points: game_mode==1 ? score : 0};
+    var phrase_length = phrase.replace(/ /g, "").length;
+    var letter_average = 0;
+    if (game_mode == 0) letter_average = time / phrase_length;
+    if (game_mode == 1) letter_average = points / phrase_length;
+    var params = {game_id: game_id, user_id: user_id,
+      time: game_mode==0 ? time : 0, points: game_mode==1 ? points : 0, letter_average: letter_average};
     var form = document.createElement("form");
     form.setAttribute("method", method);
     form.setAttribute("action", path);
@@ -281,7 +286,7 @@ function show_tutorial(i) {
     'LA PALABRA ASOCIADA A LA IMAGEN, ES SIEMPRE LA QUE LA REPRESENTA EN FORMA MAS ESPECIFICA Y NO DE MANERA GENERAL. POR EJEMPLO, LA IMAGEN DE UN PERRO, REPRESENTA A "PERRO" Y NO A "ANIMAL" O "MASCOTA". AL PULSAR SOBRE LA IMAGEN, YA SEA QUE ACERTASTE O NO, SE MOSTRARA BREVEMENTE LA PALABRA ASOCIADA.',
     'EN EL MODO POR TIEMPO, SIMPLEMENTE TENES QUE LOGRAR TERMINAR LA FRASE EN EL MENOR TIEMPO POSIBLE, NO IMPORTA EN QUE LUGAR DE LA PALABRA ESTE LA LETRA SOLICITADA ¡SI TE EQUIVOCAS VUELVES AL PRINCIPIO! EN EL MODO POR PUNTOS, EN CAMBIO, TENES UN TIEMPO LIMITADO PARA CADA LETRA Y EL PUNTAJE POR LETRA ES DE 10 PUNTOS SI LA LETRA SOLICITADA ESTA EN EL MEDIO DE LA PALABRA, 20 PUNTOS SI EMPIEZA CON LA LETRA, Y 35 PUNTOS SI TERMINA CON LA LETRA. SI ELIGES UNA IMAGEN INCORRECTA, SE TE RESTAN 5 PUNTOS.',
     'PUEDES CREAR PARTIDAS PUBLICAS PARA QUE CUALQUIER USUARIO PUEDA UNIRSE A ELLAS, O BIEN UNIRTE A UNA PARTIDA YA CREADA. PARA LAS PARTIDAS PRIVADAS, PUEDES BUSCAR USUARIOS Y ENVIARLES UNA INVITACION, O BIEN AGREGAR AUTOMATICAMENTE A QUIENES TE HAYAN ACEPTADO COMO AMIGO.',
-    'ESTE ES EL FIN DEL TUTORIAL <H1>¡ESPERAMOS QUE TE DIVIERTAS!</H1>'
+    'ESTE ES EL FIN DEL TUTORIAL <h1>¡ESPERAMOS QUE TE DIVIERTAS!</h1>'
   ];
   tutorial_message.innerHTML = messages[i];
   tutorial_container.style.pointerEvents = "all";
