@@ -1,10 +1,13 @@
+// funciones JS
+
+// setear cookie
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
-
+// obtener cookie
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -20,6 +23,7 @@ function getCookie(cname) {
     return "";
 }
 
+// llamada a ajax, recibe url y callback
 function ajaxCall(url, callback) {
   var ajax=new XMLHttpRequest();
   ajax.onreadystatechange = function() {

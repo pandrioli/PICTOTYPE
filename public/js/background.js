@@ -1,3 +1,5 @@
+// script para mover el background
+
 window.addEventListener('load', startBackgroundTimer);
 var timeBackground = 0;
 var cycle = 2000;
