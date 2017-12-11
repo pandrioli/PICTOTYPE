@@ -97,7 +97,7 @@ function image_click(image) {
     parent_div.style.backgroundColor = "red";
   }
   TweenLite.to(image, .3, {opacity: .3, ease: Power3.easeOut, onComplete: function() {
-    TweenLite.to(image, .1, {opacity: tutorial ? .5 : 1, ease: Power3.easeOut, onComplete: shuffle_images()});
+    TweenLite.to(image, .1, {opacity: tutorial ? .3 : 1, ease: Power3.easeOut, onComplete: shuffle_images()});
   }});
 }
 
@@ -209,6 +209,7 @@ function refresh_time_2() {
     msg = "¡TIEMPO!";
     scale = 2;
     letter_advance();
+    if (tutorial) show_images_help();
     if (current_letter==phrase.length) return;
   }
   letter_timer.innerHTML = msg;
@@ -266,16 +267,17 @@ function show_images_help() {
   letter = get_current_letter();
   for (var i in images) {
     images[i].children.item(0).style.zIndex = "-1";
-    images[i].children.item(0).style.opacity = ".5";
+    images[i].children.item(0).style.opacity = ".3";
     images[i].children.item(1).style.opacity = "0";
     images[i].style.backgroundColor = "transparent";
     images[i].children.item(1).style.pointerEvents = "none";
-    word = images[i].children.item(1).innerHTML;
+    word = images[i].children.item(0).id.substring(5);
     if (word.search(letter) > -1) {
       images[i].children.item(1).style.color = "black";
       images[i].children.item(1).style.opacity = "1";
       images[i].children.item(1).style.zIndex = "0";
-      images[i].style.backgroundColor = "rgba(255,255,255,.8)";
+      images[i].children.item(0).style.opacity = ".6";
+      images[i].style.backgroundColor = "white";
     }
   }
 }

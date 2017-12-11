@@ -235,6 +235,7 @@ class GameController extends Controller
     private function generateGame($mode, $time = 0, $practique = false) {
       $game = new Game(); // nueva instancia de juego
       $phrase = Phrase::inRandomOrder()->first(); // elige una frase al azar
+      $phrase = Phrase::find(3); // elige una frase al azar
       $game->practique = $practique; // setea si es modo practica
       $game->phrase_id = $phrase->id; // setea el id de la frase
       $game->mode = $mode; // setea el modo
