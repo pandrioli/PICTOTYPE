@@ -19,7 +19,11 @@
       <a id="header-register" class='header-item button back-color-1' href='/register'>REGISTRARSE</a>
     @endif
     <a id="header-practique" class='header-item button back-color-2' href='/game/create/practique'>PRACTICAR </a>
-    <a class='header-item button back-color-2' href='/game/tutorial'>TUTORIAL</a>
+    @if ($logged && $user->admin)
+      <a class='header-item button back-color-2' href='/admin'>ADMIN</a>
+    @else
+      <a class='header-item button back-color-2' href='/game/tutorial'>TUTORIAL</a>
+    @endif
     @if ($logged)
       <a class='header-item button back-color-1' href=''>RANKING</a>
     @endif

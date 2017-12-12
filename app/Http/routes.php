@@ -19,6 +19,8 @@ Route::get ('/', 'HomeController@home')->name('home');
 Route::get ('/profile', 'UserController@profile')->name('profile')->middleware('auth');
 Route::post('/profile', 'UserController@update')->middleware('auth');
 Route::get ('/changetheme', 'UserController@changeTheme');
+Route::get('/admin', 'AdminController@getPhrases')->name('admin')->middleware('auth')->middleware('isAdmin');
+Route::post('/admin', 'AdminController@setPhrases');
 
 // rutas de partidas
 Route::get ('/game/tutorial', 'GameController@tutorial'); // tutorial
