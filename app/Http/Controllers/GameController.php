@@ -135,7 +135,6 @@ class GameController extends Controller
     public function finishGame(Request $request) {
       if (!$request->input('user_id')) return redirect()->route('home'); // si no hay usuario asignado a la partida, volver a home (practica por ejemplo)
       $game = Game::find($request->input('game_id')); // instancia el juego con el id recibido
-      $game->load('players'); // carga los jugadores
       $game->setPlayerState(Game::PLAYER_DONE); // pone el estado del jugador actual en "ya jugo"
       $game->setPlayerTime($request->input('time')); // setea el tiempo que obtuvo (modo 0)
       $game->setPlayerPoints($request->input('points')); // setea los puntos que obtuvo (modo 1)
@@ -160,6 +159,7 @@ class GameController extends Controller
         }
         if ($win>0) { // si alguien gano
           $game->state = Game::STATE_FINISHED; //el juego se da por terminado
+          $game->save();
           $this->saveStats($game); // guardar estadisticas (funcion privada)
         }
         else { // empate - volver a jugar - winner_id 0 indica empate
@@ -219,10 +219,12 @@ class GameController extends Controller
         if ($game->mode == 0) { // si el juego es por modo tiempo, actualiza el promedio de tiempo por letra
           // con una formula que es (valor actual * partidas jugadas + promedio obtenido en la partida) / (partidas jugadas + 1)
           // de esta manera el promedio obtenido en la partida afecta proporcionalmente al promedio actual segun la cantidad de partidas jugadas
-          $stats->time_per_letter = ($stats->time_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
+          //$stats->time_per_letter = ($stats->time_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
+          $stats->time_per_letter = $user->pivot->letter_average;
         }
         if ($game->mode == 1) { // si es en modo puntos, hace lo mismo pero con los puntos
-          $stats->points_per_letter = ($stats->points_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
+          //$stats->points_per_letter = ($stats->points_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
+          $stats->points_per_letter = $user->pivot->letter_average;
         }
         $stats->played++; // suma una partida jugada mas
         if ($game->winner_id == $user->id) $stats->wins++; else $stats->losses++; // suma una ganada o perdida, segun sea el caso
@@ -235,7 +237,7 @@ class GameController extends Controller
     private function generateGame($mode, $time = 0, $practique = false) {
       $game = new Game(); // nueva instancia de juego
       $phrase = Phrase::inRandomOrder()->first(); // elige una frase al azar
-      //$phrase = Phrase::find(3); 
+      //$phrase = Phrase::find(3);
       $game->practique = $practique; // setea si es modo practica
       $game->phrase_id = $phrase->id; // setea el id de la frase
       $game->mode = $mode; // setea el modo

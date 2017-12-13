@@ -54,6 +54,11 @@ class User extends Authenticatable
         ->where('games_users.state', Game::PLAYER_READY)
         ->orderBy('games.id', 'desc');
     }
+    // devuelve las partidas pendientes de jugar
+    public function gamesPlaying() {
+      return $this->belongsToMany(Game::class, 'games_users')->where('practique',0)->withPivot('state', 'time', 'points')
+        ->where('games_users.state', Game::PLAYER_PLAYING);
+    }
     // devuelve las partidas ya jugadas por el usuario
     public function gamesPlayed() {
       return $this->belongsToMany(Game::class, 'games_users')->where('practique',0)->withPivot('state', 'time', 'points')

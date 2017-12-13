@@ -383,6 +383,7 @@ a {
   flex-grow: 1;
   border-radius: 0px 10px 10px 0px;
   text-align: center;
+  color: white;
   transition: .5s;
   cursor: pointer;
 }

@@ -14,7 +14,7 @@
         <div class="home-username back-color-1">
           {{$user->username}}
         </div>
-        <a class="home-stats back-color-2">ESTADISTICAS</a>
+        <a class="home-stats back-color-2" href="/user/view/{{$user->id}}/home">ESTADISTICAS</a>
     </div>
       <div class="tab-container">
         <input id="tab1" type="radio" name="tabs" value="1" hidden checked onchange="switchPanel(0)">
@@ -65,9 +65,7 @@
           <div class="item-list" id="notifications-container">
               @if ($notifications->count() > 0)
               @include('includes/notification_items')
-            @else
-              <div style="text-align: center; margin-top: 100px;">NO HAY NOTIFICACIONES</div>
-            @endif
+              @endif
           </div>
         </div>
       </div>

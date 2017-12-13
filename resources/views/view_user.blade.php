@@ -24,6 +24,19 @@
               @if ($user->fullName())
                 NOMBRE: {{ $user->fullName() }}
               @endif
+              <br>
+              @if ($user->stats)
+                JUGADAS/GANADAS: {{$user->stats->played}}/{{$user->stats->wins}} <br>
+                EFECTIVIDAD: {{round($user->stats->wins_ratio*100)}}% <br>
+                @if ($user->stats->time_per_letter)
+                  TIEMPO POR LETRA: {{$user->stats->time_per_letter}}seg<br>
+                @endif
+                @if ($user->stats->points_per_letter)
+                  PUNTOS POR LETRA: {{$user->stats->points_per_letter}}
+                @endif
+              @else
+                NO HAY ESTADISTICAS DE JUEGO AUN
+              @endif
             </div>
           </div>
           <div class="button-container">

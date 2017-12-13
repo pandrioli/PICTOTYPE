@@ -8,7 +8,12 @@ var mode1;
 function startAvailableTimer() {
   mode0 = document.getElementById('mode0-available'); // elemento que contiene el numero de partidas publicas en modo tiempo
   mode1 = document.getElementById('mode1-available'); // elemento que contiene el numero de partidas publicas en modo puntos
-  setInterval(ajaxCall('/api/games/availablepublic', updateAvailable), 1000); // timer que actualiza haciendo llamado ajax
+  getAvailable();
+  setInterval(getAvailable, 1000); // timer que actualiza haciendo llamado ajax
+}
+
+function getAvailable() {
+  ajaxCall('/api/games/availablepublic', updateAvailable);
 }
 
 // funcion que actualiza en pantalla las partidas disponibles recibiendo el objeto que devuelve el llamado a ajax

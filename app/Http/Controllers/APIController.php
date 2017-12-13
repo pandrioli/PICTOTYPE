@@ -40,6 +40,7 @@ class APIController extends Controller
     $notifications = Auth::user()->notifications->filter(function($notif) use ($timestamp) {
       return $notif->created_at > $timestamp;
     });
+
     if ($notifications->count() > 0) { // devuelve json con el timestamp de la primera notificacion, y el html listo para agregar al container
       $html = view('includes/notification_items',compact('notifications'));
       return json_encode(['timestamp' => $notifications->values()->first()->created_at->format('Y-m-d H:i:s'), 'html' => (string)$html]);
