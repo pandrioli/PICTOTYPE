@@ -219,12 +219,11 @@ class GameController extends Controller
         if ($game->mode == 0) { // si el juego es por modo tiempo, actualiza el promedio de tiempo por letra
           // con una formula que es (valor actual * partidas jugadas + promedio obtenido en la partida) / (partidas jugadas + 1)
           // de esta manera el promedio obtenido en la partida afecta proporcionalmente al promedio actual segun la cantidad de partidas jugadas
-          //$stats->time_per_letter = ($stats->time_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
+          $stats->time_per_letter = ($stats->time_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
           $stats->time_per_letter = $user->pivot->letter_average;
         }
         if ($game->mode == 1) { // si es en modo puntos, hace lo mismo pero con los puntos
-          //$stats->points_per_letter = ($stats->points_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
-          $stats->points_per_letter = $user->pivot->letter_average;
+          $stats->points_per_letter = ($stats->points_per_letter * $stats->played + $user->pivot->letter_average) / ($stats->played+1);
         }
         $stats->played++; // suma una partida jugada mas
         if ($game->winner_id == $user->id) $stats->wins++; else $stats->losses++; // suma una ganada o perdida, segun sea el caso

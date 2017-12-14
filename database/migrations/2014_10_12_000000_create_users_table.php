@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
         DB::table('users')->insert([
-          ['username' => 'test1', 'email' => 'test1', 'password' => bcrypt('asdfasdf')],
-          ['username' => 'test2', 'email' => 'test2', 'password' => bcrypt('asdfasdf')]
+          ['username' => 'test1', 'first_name' => 'Pepe', 'last_name' => 'Perez', 'email' => 'test1@pictotype.com', 'password' => bcrypt('asdfasdf')],
+          ['username' => 'test2', 'first_name' => 'Juan', 'last_name' => 'Sanchez', 'email' => 'test2@pictotype.com', 'password' => bcrypt('asdfasdf')]
         ]);
     }
 

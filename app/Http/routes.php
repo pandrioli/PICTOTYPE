@@ -45,8 +45,8 @@ Route::get('/user/search/{query}', 'UserController@searchUsers')->middleware('au
 
 
 // rutas de la API interna
-Route::get('/api/games/availablepublic', 'APIController@availablePublicGames')->middleware('auth'); // partidas publicas disponibles
-Route::get('/api/games/updated/{timestamp}', 'APIController@updatedUserGames')->middleware('auth'); // partidas actualizadas luego de timestamp indicado
-Route::get('/api/notifications/new/{timestamp}', 'APIController@newNotifications')->middleware('auth'); // notificaciones nuevas luego de timestamp indicado
-Route::get('/api/notifications/setread/{id}', 'APIController@notificationRead')->middleware('auth'); // setear una notificacion como leida
-Route::get('/api/notifications/setallreadandget', 'APIController@notificationsAllRead')->middleware('auth'); // marcar todas las notif como leidas y obtener nueva lista de notif
+Route::get('/api/games/availablepublic', 'APIController@availablePublicGames'); // partidas publicas disponibles
+Route::get('/api/games/updated/{timestamp}', 'APIController@updatedUserGames'); // partidas actualizadas luego de timestamp indicado
+Route::get('/api/notifications/new/{timestamp}', 'APIController@newNotifications'); // notificaciones nuevas luego de timestamp indicado
+Route::get('/api/notifications/setread/{id}', 'APIController@notificationRead'); // setear una notificacion como leida
+Route::get('/api/notifications/setallreadandget', 'APIController@notificationsAllRead'); // marcar todas las notif como leidas y obtener nueva lista de notif

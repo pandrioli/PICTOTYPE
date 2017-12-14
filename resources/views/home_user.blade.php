@@ -1,7 +1,7 @@
 @extends('base_site')
 @section('title', 'PICTOTYPE')
 @section('header-button', 'home')
-@section('script', asset('js/home_user.js'))
+@section('script', asset('js/home_user.js?200'))
 @php
   $notifications = $user->notifications;
 @endphp

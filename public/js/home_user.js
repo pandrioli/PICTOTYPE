@@ -5,6 +5,8 @@ window.addEventListener('load', main);
 var timestamp; // timestamp referencia para pedir partidas actualizadas y notificaciones nuevas
 var userID; // id del usuario
 var container_notif; // contenedor de notificaciones
+var timeoutGames;
+var timeoutNotif;
 
 function main() {
   // borra las cookies usadas por la vista de amigos y usuarios
@@ -15,12 +17,17 @@ function main() {
   userID = parseInt(document.getElementById('user-id').innerHTML); // obtiene la id del usuario
   timestamp = document.getElementById('timestamp').innerHTML; // obtiene el timestamp al momento de cargar la pagina
   // cuando se toca algun boton del header, pasar la tab a 0, panel 0 (partidas en curso)
-  document.querySelectorAll('.header-item, .button').forEach(function(e) { e.addEventListener('click', function() {switchPanel(0);})});
+  document.querySelectorAll('.header-item, .button').forEach(function(e) { e.addEventListener('click', function() {
+    switchPanel(0);
+    clearTimeout(timeoutGames);
+    clearTimeout(timeoutNotif);
+  })});
   var tab = getCookie('active-home-tab'); // obtiene la pestaña actual guardada en cookie
   if (tab=="") tab = 0; // si no hay cookie, la pestaña es 0
   document.querySelectorAll("input[type='radio']")[tab].checked=true; // setea el radio button asociados a la pestañas activa como checked
   switchPanel(tab); // activa el panel segun la pestaña actual
-  setInterval(getUpdates, 2000); // timer para obtener updates cada 2 segundos
+  ajaxGames();
+  ajaxNotif();
   updateNotifAlert(); // actualiza el indicador de notificaciones
 }
 
@@ -74,27 +81,34 @@ function updateNotifAlert() {
   }
 }
 
-// obtener updates con llamadas ajax, pasando el timestamp como referencia
-function getUpdates() {
+function ajaxGames() {
   ajaxCall('/api/games/updated/'+timestamp, updateGames);
+}
+
+function ajaxNotif() {
   ajaxCall('/api/notifications/new/'+timestamp, updateNotif);
 }
 
+
 // actualiza notificaciones recibidas por ajax
 function updateNotif(notif) {
+  //console.log(timestamp);
   if (notif.html) { // si hay notificaciones
     timestamp = notif.timestamp; // setear el timestamp al valor de la ultima notificacion
     container_notif.innerHTML = notif.html + container_notif.innerHTML; // agregar el html de la notificacion a las que ya existen
     updateNotifAlert(); // actualizar el indicador de notificaciones
   }
+  timeoutNotif = setTimeout(ajaxNotif, 2000);
 }
 
 // actualizar el estado de los juegos de los updates recibidos por ajax
 function updateGames(games) {
+  //console.log(timestamp);
   if (games.length>0) { // si hay juegos actualizados
     timestamp = games[0].updated_at; // setear el timestamp con el valor de la ultima actualizacion
     games.forEach(updateHTML); // para cada update recibido, actualizar el html
   }
+  timeoutGames = setTimeout(ajaxGames, 2000);
 }
 
 // actualizar el html del item de partida

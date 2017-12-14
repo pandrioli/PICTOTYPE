@@ -24,7 +24,7 @@
               @if ($user->fullName())
                 NOMBRE: {{ $user->fullName() }}
               @endif
-              <br>
+              <br><br>
               @if ($user->stats)
                 JUGADAS/GANADAS: {{$user->stats->played}}/{{$user->stats->wins}} <br>
                 EFECTIVIDAD: {{round($user->stats->wins_ratio*100)}}% <br>
