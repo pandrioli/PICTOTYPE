@@ -28,10 +28,10 @@
             <div id="phrasesContainer" class="item-list">
                 {{ csrf_field() }}
                 @foreach ($phrases->reverse() as $key => $phrase)
-                <input form="frases" name="{{$phrase->id}}" class="game-item font uppercase" type="text" value="{{$phrase->phrase}}" style="width:100%; font-weight:bold;" disabled>
+                <input form="frases" name="{{$phrase->id}}" class="game-item font uppercase" type="text" value="{{$phrase->phrase}}" style="width:100%; font-weight:bold;">
                 @endforeach
-                <input id="phrasesCount" type="text" name="cantidad" value="{{$phrases->count()}}" hidden>
             </div>
+            <input id="phrasesCount" type="text" name="cantidad" value="{{$phrases->count()}}" hidden>
           </form>
           <div class="switch-panel">
             <div class="item-list">
@@ -45,48 +45,85 @@
           </div>
         </div>
         <div class="button-container" style="" id="panel0">
-          <button type="button" class="form-button button back-color-2 font" id="btnEdit">EDITAR</button>
+          {{-- <button type="button" class="form-button button back-color-2 font" id="btnEdit">EDITAR</button> --}}
           <button type="button" class="form-button button back-color-2 font" onclick="addPhrase()">AGREGAR</button>
-          <button type="submit" class="form-button button back-color-2 font" >GUARDAR</button>
+          <button id="save" form="frases" type="submit" class="form-button button back-color-1 font" >GUARDAR</button>
         </div>
         <div class="button-container" style="display:none;" id="panel1">
           <button type="button" class="form-button button back-color-2 font" id="btnBorrar">BORRAR PARTIDAS</button>
         </div>
+        <div id="errors" class="window-header back-color-2" style="display: none;">
+          LAS FRASES DEBEN TENER ENTRE 15 Y 40 CARACTERES Y NO PUEDE HABER DUPLICADAS
+        </div>
       </div>
   </div>
   <script type="text/javascript">
-    var btnEdit = document.getElementById('btnEdit');
 
+    window.onload = setInputAttribute
 
-    btnEdit.onclick = enablePhrases;
+    function setInputAttribute() {
+      check();
+      document.querySelectorAll('#phrasesContainer .game-item').forEach(function(input) {
+        input.oninput = function() {
+          this.value = this.value.toUpperCase();
+          this.setAttribute('value', this.value);
+          check();
+        };
+      });
+    };
+
+    function check() {
+      var errors = document.getElementById('errors');
+      var buttons = document.getElementById('panel0');
+      var phrases = document.querySelectorAll('#phrasesContainer .game-item');
+      var err = false;
+      phrases.forEach(function(phrase) {
+        if (phrase.value.length<15 || phrase.value.length>40 || duplicates(phrase)) {
+          err = true;
+          phrase.style.color = "red";
+        } else {
+          phrase.style.color = "black";
+        };
+      });
+      errors.style.display = err ? 'block' : 'none';
+      buttons.style.display = err ? 'none' : 'flex';
+      function duplicates(phrase) {
+        var dup = 0;
+        phrases.forEach(function(other_phrase) {
+          if (phrase.value == other_phrase.value) dup++;
+        });
+        return dup>1;
+      }
+    }
+
     function addPhrase(){
-      var id = document.querySelectorAll('.game-item').length + 1;
+      var id = document.querySelectorAll('#phrasesContainer .game-item').length + 1;
       var container = document.getElementById('phrasesContainer');
-      var input = '<input form="frases" name="' + id + '" class="game-item font uppercase" type="text" value="" style="width:100%; font-weight:bold;" disabled>';
+      var input = '<input form="frases" name="' + id + '" class="game-item font uppercase" type="text" value="" style="width:100%; font-weight:bold;">';
 
       container.innerHTML = input + container.innerHTML;
 
       document.getElementById('phrasesCount').value = id.toString();
-      enablePhrases();
       container.firstElementChild.focus();
+      setInputAttribute();
     }
-    function enablePhrases(){
-      var txtPhrases = document.querySelectorAll('.game-item');
 
-      for (var i = 0; i < txtPhrases.length; i++) {
-        if (txtPhrases[i].hasAttribute('disabled')) {
-          txtPhrases[i].removeAttribute('disabled');
-          btnEdit.innerText = "ACEPTAR";
-        }
-        else {
-          txtPhrases[i].setAttribute('disabled','');
-          btnEdit.innerText = "EDITAR";
-        }
-      }
-    }
+    // function enablePhrases(){
+    //   var txtPhrases = document.querySelectorAll('.game-item');
+    //
+    //   for (var i = 0; i < txtPhrases.length; i++) {
+    //     if (txtPhrases[i].hasAttribute('disabled')) {
+    //       txtPhrases[i].removeAttribute('disabled');
+    //       btnEdit.innerText = "ACEPTAR";
+    //     }
+    //     else {
+    //       txtPhrases[i].setAttribute('disabled','');
+    //       btnEdit.innerText = "EDITAR";
+    //     }
+    //   }
+    // }
 
     function switchPanel(index) {
-      setCookie('active-home-tab', index);
       var panels = document.getElementsByClassName('switch-panel');
       var btnPanels = [document.getElementById('panel0'), document.getElementById('panel1')];
       for (var i=0; i< panels.length; i++) {
@@ -99,7 +136,8 @@
       panels[index].style.opacity="1";
       panels[index].style.pointerEvents="all";
       btnPanels[index].style.display = "";
-
+      document.getElementById('errors').style.display = index==0? 'block' : 'none';
+      if (index == 0) check();
     }
   </script>
 @endsection
