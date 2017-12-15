@@ -1,5 +1,4 @@
 @extends('base_site')
-@section('script', asset('js/forms.js'))
 @section('header-button', 'login')
 @section('content')
             <div class="center-screen">

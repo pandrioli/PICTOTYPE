@@ -1,5 +1,5 @@
 @extends('base_site')
-@section('script', '/js/forms.js')
+@section('script', '/js/form_register.js')
 @section('header-button', 'register')
 @section('content')
       <div class="center-screen">
@@ -10,50 +10,50 @@
                   {{ csrf_field() }}
 
                       <label for="name">NOMBRE DE USUARIO</label>
+                      <span class="form-error" id="error-username">
                       @if ($errors->has('username'))
-                          <span class="form-error">
                               <strong>{{ $errors->first('username') }}</strong>
-                          </span>
                       @endif
+                      </span>
 
-                          <input id="username" type="text" class="form-input-text font" name="username" value="{{ old('username') }}" autofocus>
+                      <input id="username" type="text" class="form-input-text font" name="username" value="{{ old('username') }}" autofocus>
 
 
                       <label for="email">E-MAIL</label>
+                      <span class="form-error" id="error-email">
                       @if ($errors->has('email'))
-                          <span class="form-error">
                               <strong>{{ $errors->first('email') }}</strong>
-                          </span>
                       @endif
+                      </span>
 
-                          <input id="email" type="email" class="form-input-text font" name="email" value="{{ old('email') }}">
+                      <input id="email" type="email" class="form-input-text font" name="email" value="{{ old('email') }}">
 
 
                       <label for="password">PASSWORD</label>
+                      <span class="form-error" id='error-pass'>
                       @if ($errors->has('password'))
-                          <span class="form-error">
                               <strong>{{ $errors->first('password') }}</strong>
-                          </span>
                       @endif
+                      </span>
 
-                          <input id="password" type="password" class="form-input-text font" name="password">
+                      <input id="password" type="password" class="form-input-text font" name="password">
 
 
                       <label for="password-confirm">CONFIRMAR PASS</label>
+                      <span class="form-error" id='error-confirm'>
                       @if ($errors->has('password_confirmation'))
-                          <span class="form-error">
                               <strong>{{ $errors->first('password_confirmation') }}</strong>
-                          </span>
                       @endif
+                      </span>
 
-                          <input id="password-confirm" type="password" class="form-input-text font" name="password_confirmation">
+                      <input id="password-confirm" type="password" class="form-input-text font" name="password_confirmation">
 
 
               </form>
           </div>
           <div class="button-container">
             <a class="button form-button back-color-2" href="/">CANCELAR</a>
-            <button type="submit" class="button form-button back-color-1 font" form="register_form">
+            <button id="register" type="submit" class="button form-button back-color-1 font" form="register_form">
                 REGISTRARSE
             </button>
           </div>

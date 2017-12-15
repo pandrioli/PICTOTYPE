@@ -24,6 +24,9 @@
               @if ($user->fullName())
                 NOMBRE: {{ $user->fullName() }}
               @endif
+              @if ($user->country)
+                <br>PAIS: {{ $user->country }}
+              @endif
               <br><br>
               @if ($user->stats)
                 JUGADAS/GANADAS: {{$user->stats->played}}/{{$user->stats->wins}} <br>
@@ -39,23 +42,25 @@
               @endif
             </div>
           </div>
-          <div class="button-container">
-              @if ($friendship == User::FRIENDSHIP_NONE)
-                <a class="button back-color-2" href="/user/friends/request/{{$user->id}}/{{$back}}">SOLICITAR AMISTAD</a>
-              @endif
-              @if ($friendship == User::FRIENDSHIP_REQUESTED)
-                <a class="button back-color-3" href="">AMISTAD SOLICITADA</a>
-              @endif
-              @if ($friendship == User::FRIENDSHIP_PENDING)
-                <a class="button back-color-2" href="/user/friends/accept/{{$user->id}}/{{$back}}">ACEPTAR AMISTAD</a>
-              @endif
-              @if ($friendship == User::FRIENDSHIP_ACCEPTED)
-                <a class="button back-color-2" href="/user/friends/cancel/{{$user->id}}/{{$back}}">CANCELAR AMISTAD</a>
-                <a class="button back-color-1" href="/game/create/{{$user->id}}">JUGAR PARTIDA</a>
-              @else
-                <a class="button back-color-1" href="/game/create/{{$user->id}}">INVITAR PARTIDA</a>
-              @endif
-          </div>
+          @if (Auth::user()->id != $user->id)
+            <div class="button-container">
+                @if ($friendship == User::FRIENDSHIP_NONE)
+                  <a class="button back-color-2" href="/user/friends/request/{{$user->id}}/{{$back}}">SOLICITAR AMISTAD</a>
+                @endif
+                @if ($friendship == User::FRIENDSHIP_REQUESTED)
+                  <a class="button back-color-3" href="">AMISTAD SOLICITADA</a>
+                @endif
+                @if ($friendship == User::FRIENDSHIP_PENDING)
+                  <a class="button back-color-2" href="/user/friends/accept/{{$user->id}}/{{$back}}">ACEPTAR AMISTAD</a>
+                @endif
+                @if ($friendship == User::FRIENDSHIP_ACCEPTED)
+                  <a class="button back-color-2" href="/user/friends/cancel/{{$user->id}}/{{$back}}">CANCELAR AMISTAD</a>
+                  <a class="button back-color-1" href="/game/create/{{$user->id}}">JUGAR PARTIDA</a>
+                @else
+                  <a class="button back-color-1" href="/game/create/{{$user->id}}">INVITAR PARTIDA</a>
+                @endif
+            </div>
+          @endif
           <a class="button back-button back-color-1" href="{{$backURL}}"><i class="fa fa-backward" aria-hidden="true"></i>&nbspVOLVER</a>
       </div>
     </div>
